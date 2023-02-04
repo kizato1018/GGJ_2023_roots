@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> rabbits_gameobject_;
     public List<GameObject> players_gameobject_;
-
+    public GameObject game_over_obj;
 
     static public GameManager instance;
     private List<Character> players_;
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         
     }
     void Start() {
+        game_over_obj.SetActive(false);
         m_seconds = 0;
         StartCoroutine(Countdown());
     }
@@ -73,5 +74,15 @@ public class GameManager : MonoBehaviour
     }
     public void Resume() {
         Time.timeScale = 1;
+    }
+
+    public void ReStart()
+    {
+        Resume();
+        RootsManager.instance = null;
+        TreeManager.instance = null;
+        AudioManager.instance = null;
+        GameManager.instance = null;
+        SceneManager.LoadScene(0);
     }
 }

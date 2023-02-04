@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public Tilemap floormap;
     public Tilemap boxmap;
     public Tile floor;
-    public Tile box;
+    public TileBase box;
     public TileBase current_face_tile;
     public GameObject current_face_object;
     public GameObject hold_block;
@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     private bool is_hold;
     private bool use;
     private SpriteRenderer sprite_renderer;
+    private Animator animator;
+
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
         is_hold = false;
         interact_block = gameObject.GetComponentInChildren<PlayerInteract>();
         sprite_renderer = GetComponent<SpriteRenderer>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     private void Start()
@@ -121,6 +124,7 @@ public class Player : MonoBehaviour
             }
             else if (pickedObject.tag == "Weapon")
             {
+                animator.SetTrigger("wave");
                 pickedObject.GetComponent<ObjectSkill>().UseSkill(interact_block.gameObject);
             }
         }

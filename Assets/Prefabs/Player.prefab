@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 5611648156388946686}
   - component: {fileID: 5611648156388946687}
   - component: {fileID: 5611648156388946680}
+  - component: {fileID: 1481693692288254405}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -274,10 +275,30 @@ MonoBehaviour:
   floormap: {fileID: 0}
   boxmap: {fileID: 0}
   floor: {fileID: 0}
-  box: {fileID: 11400000, guid: 5c34833512ff3c147b5aa6a27099bde3, type: 2}
+  box: {fileID: 11400000, guid: 5f596df8acfd65c468922e05ce70f80e, type: 2}
   current_face_tile: {fileID: 0}
   current_face_object: {fileID: 0}
   hold_block: {fileID: 0}
+--- !u!95 &1481693692288254405
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611648156388946681}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 588dea8c3b2a95444b0bcd26d5ffe8d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5611648157247400286
 GameObject:
   m_ObjectHideFlags: 0
