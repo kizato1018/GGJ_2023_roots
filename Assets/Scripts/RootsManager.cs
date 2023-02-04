@@ -44,8 +44,7 @@ public class RootsManager : MonoBehaviour
     {
         Vector3Int location = map.WorldToCell(pos);
         TileBase tile = map.GetTile(location);
-        if (tile == null) return false;
-        if (tile.name == "obstacle") return false;
+        if (tile != null && tile.name == "obstacle") return false;
         return map.GetTile(location) == null && (
                (map.GetTile(location + Vector3Int.up) && map.GetTile(location + Vector3Int.up).name == "root") ||
                (map.GetTile(location + Vector3Int.right) && map.GetTile(location + Vector3Int.right).name == "root") ||
