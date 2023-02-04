@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object : MonoBehaviour
+public interface ObjectSkill
+{
+    public void UseSkill();
+}
+
+public class Object : MonoBehaviour, ObjectSkill
 {
     // Start is called before the first frame update
     void Start()
@@ -19,5 +24,9 @@ public class Object : MonoBehaviour
     public void WasTaken()
     {
 
+    }
+
+    public void UseSkill()
+    {
     }
 }
