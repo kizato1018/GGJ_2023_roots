@@ -149,7 +149,8 @@ public class Player : MonoBehaviour
                     if (RootsManager.instance.CheckToPool(RootsManager.instance.RootDatas[0].v3IntPosition))
                     {
                         Debug.Log("連上水池");
-                        TreeManager.instance.StartAddWater();
+                        //TODO 判斷是連上哪個水池
+                        //TreeManager.instance.StartAddWater();
                     }
                 }
             }
