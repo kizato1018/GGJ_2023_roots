@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -23,8 +24,13 @@ public class Player : MonoBehaviour
     // The prefab must have a Rigidbody component on it in order to work.
     public GameObject bulletPrefab;
 
-    public GameObject current_face;
+    public Tilemap floormap;
+    public Tilemap boxmap;
+    public Tile floor;
+    public Tile box;
+    public TileBase current_face;
     public GameObject hold_block;
+    private PlayerInteract interact_block;
     private Rewired.Player player; // The Rewired Player
     private CharacterController cc;
     private Vector3 moveVector;
@@ -35,6 +41,7 @@ public class Player : MonoBehaviour
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
         is_hold = false;
+        interact_block = gameObject.GetComponentInChildren<PlayerInteract>();
         // Get the character controller
         //cc = GetComponent<CharacterController>();
     }
@@ -83,10 +90,10 @@ public class Player : MonoBehaviour
         // Process fire
         if (use)
         {
-            if(is_hold == false && current_face.name == "box"){
-                print("hit box");
-                hold_block = current_face;
-                is_hold = true;
+            if(current_face)
+            {
+                print(current_face.name);
+                interact_block.SetTile(null);
             }
             // GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
             // bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);

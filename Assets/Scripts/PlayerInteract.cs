@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Rewired;
+using UnityEngine.Tilemaps;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -10,12 +10,14 @@ public class PlayerInteract : MonoBehaviour
     {
         player = gameObject.GetComponentInParent<Player>();
     }
-
-    private void OnCollisionEnter2D(Collision2D other) {
-        player.current_face = other.gameObject;
+    void Update() {
+        Vector3Int location = player.boxmap.WorldToCell(gameObject.transform.position);
+        // print(location);
+        // print(player.boxmap.GetTile(location));
+        player.current_face = player.boxmap.GetTile(location);
     }
-
-    private void OnCollisionExit2D(Collision2D other) {
-        player.current_face = null;
+    public void SetTile(Tile tile) {
+        Vector3Int location = player.boxmap.WorldToCell(gameObject.transform.position);
+        player.boxmap.SetTile(location, tile);
     }
 }
