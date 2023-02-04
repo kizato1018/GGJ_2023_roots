@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
-using static UnityEngine.GraphicsBuffer;
-using System.Drawing;
 using UnityEngine.Tilemaps;
-using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -21,8 +18,8 @@ public class Player : MonoBehaviour
 
     // The bullet speed
     public float bulletSpeed = 15.0f;
-    
-    
+
+
 
     // Assign a prefab to this in the inspector.
     // The prefab must have a Rigidbody component on it in order to work.
@@ -40,8 +37,13 @@ public class Player : MonoBehaviour
     private float rotateSpeed = 0.1f;
     [SerializeField] private float yVelocity = 0.0f;
 
-    public GameObject current_face;
+    public Tilemap floormap;
+    public Tilemap boxmap;
+    public Tile floor;
+    public Tile box;
+    public TileBase current_face;
     public GameObject hold_block;
+    private PlayerInteract interact_block;
     private bool use;
     private bool is_hold;
     void Awake()
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
         is_hold = false;
-  
+        interact_block = gameObject.GetComponentInChildren<PlayerInteract>();
     }
 
     void Update()
@@ -60,7 +62,7 @@ public class Player : MonoBehaviour
         handleInteraction();
         ProcessInput();
 
-        float z=0;
+        float z = 0;
         Vector3 v3 = lastMoveVector.normalized;
         if (v3.x > 0)
         {
@@ -80,13 +82,15 @@ public class Player : MonoBehaviour
             //z = Vector3.Angle(Vector3.up, v3);
         }
         if (GetObjectPositionRoot)
-        GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, z);
-        GetObjectPositionRoot.forward = Vector3.Lerp(GetObjectPositionRoot.forward, moveVector, Time.deltaTime);
+        {
+            GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, z);
+            GetObjectPositionRoot.forward = Vector3.Lerp(GetObjectPositionRoot.forward, moveVector, Time.deltaTime);
+        }
     }
 
     public void SmoothRotationY(float iTargetAngle)
     {
-        GetObjectPositionRoot.eulerAngles = new Vector3(0,0, Mathf.SmoothDampAngle(transform.eulerAngles.y, iTargetAngle, ref yVelocity, rotateSpeed));
+        GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, Mathf.SmoothDampAngle(transform.eulerAngles.y, iTargetAngle, ref yVelocity, rotateSpeed));
     }
 
     private void GetInput()
@@ -111,7 +115,7 @@ public class Player : MonoBehaviour
             this.transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
             //cc.Move(moveVector * moveSpeed * Time.deltaTime);
 
-            if(moveVector != Vector3.zero)
+            if (moveVector != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, moveVector);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
@@ -122,25 +126,12 @@ public class Player : MonoBehaviour
         // Process fire
         if (use && pickedObject == null)
         {
-            //GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
-            //bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
             pick();
         }
         else if (use && pickedObject != null)
         {
-            putDown(); 
+            putDown();
         }
-
-        //if (use)
-        //{
-        //    if(is_hold == false && current_face.name == "box"){
-        //        print("hit box");
-        //        hold_block = current_face;
-        //        is_hold = true;
-        //    }
-        //    // GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
-        //    // bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
-        //}
     }
 
     private void handleInteraction()
@@ -158,6 +149,11 @@ public class Player : MonoBehaviour
         else
         {
             collider = null;
+            if (current_face)
+            {
+                print(current_face.name);
+                interact_block.SetTile(null);
+            }
         }
     }
 
