@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Kettle
   - Weapon
+  - Obstacle
   layers:
   - Default
   - TransparentFX
