@@ -269,12 +269,8 @@ MonoBehaviour:
   moveSpeed: 3
   rotSpeed: 3
   rotationSpeed: 1000
-  bulletSpeed: 15
-  bulletPrefab: {fileID: 0}
-  GetObjectPositionRoot: {fileID: 0}
-  GetObjectPosition: {fileID: 0}
+  interact_block_root: {fileID: 8676884659661989937}
   pickedObject: {fileID: 0}
-  yVelocity: 0
   floormap: {fileID: 0}
   boxmap: {fileID: 0}
   floor: {fileID: 0}
