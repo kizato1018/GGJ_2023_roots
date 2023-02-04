@@ -16,8 +16,13 @@ public class Player : MonoBehaviour
     public float moveSpeed = 3.0f;
     public float rotSpeed = 3.0f;
 
+    // The rotation speed of this character
+    public float rotationSpeed = 3.0f;
+
     // The bullet speed
     public float bulletSpeed = 15.0f;
+    
+    
 
     // Assign a prefab to this in the inspector.
     // The prefab must have a Rigidbody component on it in order to work.
@@ -27,7 +32,6 @@ public class Player : MonoBehaviour
     public Transform GetObjectPosition;
 
     private Rewired.Player player; // The Rewired Player
-    private CharacterController cc;
     private Vector3 moveVector;
     private Vector3 lastMoveVector;
     private bool fire;
@@ -36,13 +40,15 @@ public class Player : MonoBehaviour
     private float rotateSpeed = 0.1f;
     [SerializeField] private float yVelocity = 0.0f;
 
+    public GameObject current_face;
+    public GameObject hold_block;
+    private bool use;
+    private bool is_hold;
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
-
-        // Get the character controller
-        //cc = GetComponent<CharacterController>();
+        is_hold = false;
   
     }
 
@@ -90,7 +96,8 @@ public class Player : MonoBehaviour
 
         moveVector.x = player.GetAxis("Move Horizontal"); // get input by name or action id
         moveVector.y = player.GetAxis("Move Vertical");
-        fire = player.GetButtonDown("Catch");
+        use = player.GetButtonDown("Catch");
+
     }
 
     private void ProcessInput()
@@ -98,8 +105,18 @@ public class Player : MonoBehaviour
         // Process movement
         if (moveVector.x != 0.0f || moveVector.y != 0.0f)
         {
+            float inputMagnitude = Mathf.Clamp01(moveVector.magnitude);
+            moveVector.Normalize();
+
+            this.transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
             //cc.Move(moveVector * moveSpeed * Time.deltaTime);
-            this.transform.Translate(moveVector * moveSpeed * Time.deltaTime);
+
+            if(moveVector != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, moveVector);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            }
+
         }
 
         // Process fire
@@ -109,9 +126,20 @@ public class Player : MonoBehaviour
             //bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
             pick();
         }
-        else if(fire && pickedObject != null)
+        else if (fire && pickedObject != null)
         {
-            putDown();
+            putDown(); 
+        }
+
+        if (use)
+        {
+            if(is_hold == false && current_face.name == "box"){
+                print("hit box");
+                hold_block = current_face;
+                is_hold = true;
+            }
+            // GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
+            // bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
         }
     }
 
