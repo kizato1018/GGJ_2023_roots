@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
             if (moveVector != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, moveVector);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                interact_block.transform.parent.rotation = Quaternion.RotateTowards(interact_block.transform.parent.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
 
         }
