@@ -81,11 +81,11 @@ public class Player : MonoBehaviour
         {
             //z = Vector3.Angle(Vector3.up, v3);
         }
-        if (GetObjectPositionRoot)
-        {
-            GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, z);
-            GetObjectPositionRoot.forward = Vector3.Lerp(GetObjectPositionRoot.forward, moveVector, Time.deltaTime);
-        }
+        //if (GetObjectPositionRoot)
+        //{
+        //    GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, z);
+        //    GetObjectPositionRoot.forward = Vector3.Lerp(GetObjectPositionRoot.forward, moveVector, Time.deltaTime);
+        //}
     }
 
     public void SmoothRotationY(float iTargetAngle)
@@ -159,9 +159,10 @@ public class Player : MonoBehaviour
 
     private void pick()
     {
+        Debug.Log("pick");
         if (collider == null) return;
-        if (GetObjectPosition)
-            collider.transform.SetParent(GetObjectPosition);
+        if (GetObjectPositionRoot)
+            collider.transform.SetParent(GetObjectPositionRoot);
         collider.transform.localPosition = Vector3.zero;
         collider.GetComponent<BoxCollider2D>().enabled = false;
         pickedObject = collider.gameObject;
@@ -169,6 +170,7 @@ public class Player : MonoBehaviour
 
     private void putDown()
     {
+        Debug.Log("putDown");
         pickedObject.transform.parent = null;
         pickedObject.GetComponent<BoxCollider2D>().enabled = true;
         pickedObject = null;
