@@ -10,10 +10,11 @@ public class Rabbit : MonoBehaviour
     public float check_time = 3.0f;
     private float check_timer=0.0f;
     private RootData current_goal = null; 
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,12 +33,14 @@ public class Rabbit : MonoBehaviour
 
             if (Vector3.Distance(transform.position,current_goal.worldPosition) < 0.01f)
             {
+                animator.SetBool("is_attacking", true);
                 sleep_timer += Time.deltaTime;
                 if(sleep_timer > sleep_time)
                 {
                     RootsManager.instance.DeleteRoot(current_goal.worldPosition);
                     sleep_timer = 0.0f;
                     current_goal = null;
+                    animator.SetBool("is_attacking", false);
                 }
             }
         }

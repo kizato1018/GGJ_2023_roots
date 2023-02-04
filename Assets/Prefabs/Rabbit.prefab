@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7839543876204350618}
   - component: {fileID: 7839543876204350619}
   - component: {fileID: 7839543876204350616}
+  - component: {fileID: 3849080565909019044}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Untagged
@@ -100,3 +101,23 @@ MonoBehaviour:
   Speed: 2
   sleep_time: 1
   check_time: 3
+--- !u!95 &3849080565909019044
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839543876204350617}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5e5ff93e46b3974393481478a5d426d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
