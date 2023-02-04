@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using static UnityEngine.GraphicsBuffer;
+using System.Drawing;
+using UnityEngine.Tilemaps;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +14,7 @@ public class Player : MonoBehaviour
 
     // The movement speed of this character
     public float moveSpeed = 3.0f;
+    public float rotSpeed = 3.0f;
 
     // The bullet speed
     public float bulletSpeed = 15.0f;
@@ -18,10 +23,18 @@ public class Player : MonoBehaviour
     // The prefab must have a Rigidbody component on it in order to work.
     public GameObject bulletPrefab;
 
+    public Transform GetObjectPositionRoot;
+    public Transform GetObjectPosition;
+
     private Rewired.Player player; // The Rewired Player
     private CharacterController cc;
     private Vector3 moveVector;
+    private Vector3 lastMoveVector;
     private bool fire;
+    private Collider2D collider;
+    private GameObject pickedObject;
+    private float rotateSpeed = 0.1f;
+    [SerializeField] private float yVelocity = 0.0f;
 
     void Awake()
     {
@@ -30,6 +43,7 @@ public class Player : MonoBehaviour
 
         // Get the character controller
         //cc = GetComponent<CharacterController>();
+  
     }
 
     void Update()
@@ -37,7 +51,36 @@ public class Player : MonoBehaviour
         if (!ReInput.isReady) return; // Exit if Rewired isn't ready. This would only happen during a script recompile in the editor.
         if (player == null) return;
         GetInput();
+        handleInteraction();
         ProcessInput();
+
+        float z=0;
+        Vector3 v3 = lastMoveVector.normalized;
+        if (v3.x > 0)
+        {
+            //z = -Vector3.Angle(Vector3.right, v3);
+            //SmoothRotationY(90);
+        }
+        else
+        {
+            //z = Vector3.Angle(Vector3.right, v3);
+        }
+        if (v3.y > 0)
+        {
+            //z = -Vector3.Angle(Vector3.up, v3);
+        }
+        else
+        {
+            //z = Vector3.Angle(Vector3.up, v3);
+        }
+        if (GetObjectPositionRoot)
+        GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, z);
+        GetObjectPositionRoot.forward = Vector3.Lerp(GetObjectPositionRoot.forward, moveVector, Time.deltaTime);
+    }
+
+    public void SmoothRotationY(float iTargetAngle)
+    {
+        GetObjectPositionRoot.eulerAngles = new Vector3(0,0, Mathf.SmoothDampAngle(transform.eulerAngles.y, iTargetAngle, ref yVelocity, rotateSpeed));
     }
 
     private void GetInput()
@@ -60,10 +103,58 @@ public class Player : MonoBehaviour
         }
 
         // Process fire
-        if (fire)
+        if (fire && pickedObject == null)
         {
-            GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
-            bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
+            //GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
+            //bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
+            pick();
         }
+        else if(fire && pickedObject != null)
+        {
+            putDown();
+        }
+    }
+
+    private void handleInteraction()
+    {
+        if (moveVector != Vector3.zero)
+        {
+            lastMoveVector = moveVector;
+        }
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveVector, 1, 1 << LayerMask.NameToLayer("Object"));
+        if (hit)
+        {
+            Debug.Log(hit.collider.name);
+            collider = hit.collider;
+        }
+        else
+        {
+            collider = null;
+        }
+    }
+
+    private void pick()
+    {
+        if (collider == null) return;
+        if (GetObjectPosition)
+            collider.transform.SetParent(GetObjectPosition);
+        collider.transform.localPosition = Vector3.zero;
+        collider.GetComponent<BoxCollider2D>().enabled = false;
+        pickedObject = collider.gameObject;
+    }
+
+    private void putDown()
+    {
+        pickedObject.transform.parent = null;
+        pickedObject.GetComponent<BoxCollider2D>().enabled = true;
+        pickedObject = null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 origin = new Vector3(0, 0, 0);
+        Vector3 direction = new Vector3(1, 0, 0);
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawRay(origin, moveVector);
     }
 }
