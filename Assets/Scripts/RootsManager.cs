@@ -71,6 +71,12 @@ public class RootsManager : MonoBehaviour
         }
     }
 
+    public void DeleteObstacle(Vector3 worldPosition)
+    {
+        Vector3Int v3IntPosition = map.WorldToCell(worldPosition);
+        map.SetTile(v3IntPosition, null);
+    }
+
     public RootData FindNearRoot(Vector3 pos)
     {
         RootData near_root = null;

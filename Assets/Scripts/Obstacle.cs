@@ -16,6 +16,7 @@ public class Obstacle : MonoBehaviour, BattleAction
 
     public void Died()
     {
+        RootsManager.instance.DeleteObstacle(transform.position);
         Destroy(gameObject);
     }
 
