@@ -15,7 +15,7 @@ public class PlayerInteract : MonoBehaviour
         Vector3Int location = player.boxmap.WorldToCell(gameObject.transform.position);
         // print(location);
         // print(player.boxmap.GetTile(location));
-        player.current_face = player.boxmap.GetTile(location);
+        player.current_face_tile = player.boxmap.GetTile(location);
     }
     public void SetTile(Tile tile) {
         Vector3Int location = player.boxmap.WorldToCell(gameObject.transform.position);
@@ -25,6 +25,11 @@ public class PlayerInteract : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision == null) return;
+        player.current_face_object = collision.gameObject;
         Debug.Log(collision.gameObject.name);
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        player.current_face_object = null;
     }
 }

@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private Vector3 lastMoveVector;
     private bool fire;
     private Collider2D collider;
-    private GameObject pickedObject;
+    public GameObject pickedObject;
     private float rotateSpeed = 0.1f;
     [SerializeField] private float yVelocity = 0.0f;
 
@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
     public Tilemap boxmap;
     public Tile floor;
     public Tile box;
-    public TileBase current_face;
+    public TileBase current_face_tile;
+    public GameObject current_face_object;
     public GameObject hold_block;
     private PlayerInteract interact_block;
     private bool _catch;
@@ -138,7 +139,14 @@ public class Player : MonoBehaviour
         {
             if (pickedObject.tag == "Kettle")
             {
-                interact_block.SetTile(box);
+                print("use Kettle");
+                if(RootsManager.instance.CanCreateRoot(interact_block.transform.position))
+                {
+                    print("Can create root");
+                    RootsManager.instance.CreateRoot(interact_block.transform.position);
+                    interact_block.SetTile(box);
+                    print(RootsManager.instance.CheckToPool(RootsManager.instance.RootDatas[0].v3IntPosition));
+                }
             }
             else if (pickedObject.tag == "Weapon")
             {
@@ -153,32 +161,33 @@ public class Player : MonoBehaviour
         {
             lastMoveVector = moveVector;
         }
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveVector, 1, 1 << LayerMask.NameToLayer("Object"));
-        if (hit)
-        {
-            Debug.Log(hit.collider.name);
-            collider = hit.collider;
-        }
-        else
-        {
-            collider = null;
-            if (current_face)
-            {
-                print(current_face.name);
-                interact_block.SetTile(box);
-            }
-        }
+        // if(current_face_object != null)
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, moveVector, 1, 1 << LayerMask.NameToLayer("Object"));
+        // if (hit)
+        // {
+        //     Debug.Log(hit.collider.name);
+        //     collider = hit.collider;
+        // }
+        // else
+        // {
+        //     collider = null;
+        //     if (current_face_tile)
+        //     {
+        //         print(current_face_tile.name);
+        //         interact_block.SetTile(box);
+        //     }
+        // }
     }
 
     private void pick()
     {
         Debug.Log("pick");
-        if (collider == null) return;
-        if (GetObjectPositionRoot)
-            collider.transform.SetParent(GetObjectPositionRoot);
-        collider.transform.localPosition = Vector3.zero;
-        collider.GetComponent<BoxCollider2D>().enabled = false;
-        pickedObject = collider.gameObject;
+        if (current_face_object == null) return;
+        // if (GetObjectPositionRoot)
+        pickedObject = current_face_object;
+        current_face_object.GetComponent<BoxCollider2D>().enabled = false;
+        pickedObject.transform.SetParent(interact_block.transform);
+        pickedObject.transform.localPosition = Vector3.zero;
         Object obj = pickedObject.GetComponent<Object>();
         if (obj) pickedObject.GetComponent<Object>().SetOwner(gameObject);
     }

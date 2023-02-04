@@ -15,11 +15,16 @@ public class RootData
 }
 public class RootsManager : MonoBehaviour
 {
+    static public RootsManager instance;
     public Tilemap map;
     public List<Transform> Start_RootDatas = new List<Transform>();
     public List<RootData> RootDatas = new List<RootData>();
     private List<Vector3Int> _visited = new List<Vector3Int>();
     // Start is called before the first frame update
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         foreach(Transform start in Start_RootDatas)
@@ -37,11 +42,11 @@ public class RootsManager : MonoBehaviour
     public bool CanCreateRoot(Vector3 pos)
     {
         Vector3Int location = map.WorldToCell(pos);
-        return map.GetTile(location) == null &&
-               map.GetTile(location+Vector3Int.up).name == "root" || 
-               map.GetTile(location+Vector3Int.right).name == "root" || 
-               map.GetTile(location+Vector3Int.down).name == "root" || 
-               map.GetTile(location+Vector3Int.left).name == "root";
+        return map.GetTile(location) == null && (
+               (map.GetTile(location+Vector3Int.up) && map.GetTile(location+Vector3Int.up).name == "root") || 
+               (map.GetTile(location+Vector3Int.right) && map.GetTile(location+Vector3Int.right).name == "root") || 
+               (map.GetTile(location+Vector3Int.down) && map.GetTile(location+Vector3Int.down).name == "root") || 
+               (map.GetTile(location+Vector3Int.left) && map.GetTile(location+Vector3Int.left).name == "root"));
     }
 
     public void CreateRoot(Vector3 pos)
