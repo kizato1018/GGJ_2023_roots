@@ -44,8 +44,9 @@ public class Player : MonoBehaviour
     public TileBase current_face;
     public GameObject hold_block;
     private PlayerInteract interact_block;
-    private bool use;
+    private bool _catch;
     private bool is_hold;
+    private bool use;
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -100,8 +101,8 @@ public class Player : MonoBehaviour
 
         moveVector.x = player.GetAxis("Move Horizontal"); // get input by name or action id
         moveVector.y = player.GetAxis("Move Vertical");
-        use = player.GetButtonDown("Catch");
-
+        _catch = player.GetButtonDown("Catch");
+        use = player.GetButtonDown("Use");
     }
 
     private void ProcessInput()
@@ -124,13 +125,18 @@ public class Player : MonoBehaviour
         }
 
         // Process fire
-        if (use && pickedObject == null)
+        if (_catch && pickedObject == null)
         {
             pick();
         }
-        else if (use && pickedObject != null)
+        else if (_catch && pickedObject != null)
         {
             putDown();
+        }
+
+        if (use && pickedObject != null && pickedObject.tag == "Kettle")
+        {
+            interact_block.SetTile(box);
         }
     }
 
@@ -152,7 +158,7 @@ public class Player : MonoBehaviour
             if (current_face)
             {
                 print(current_face.name);
-                interact_block.SetTile(null);
+                interact_block.SetTile(box);
             }
         }
     }
