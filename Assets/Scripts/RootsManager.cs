@@ -85,39 +85,44 @@ public class RootsManager : MonoBehaviour
 
     public bool CheckToPool(Vector3Int location)
     {
-        if (map.GetTile(location+Vector3Int.up).name == "pool" || 
-            map.GetTile(location+Vector3Int.right).name == "pool" || 
-            map.GetTile(location+Vector3Int.down).name == "pool" || 
-            map.GetTile(location+Vector3Int.left).name == "pool")
+        if ((map.GetTile(location+Vector3Int.up) && map.GetTile(location+Vector3Int.up).name == "pool") || 
+            (map.GetTile(location+Vector3Int.right) && map.GetTile(location+Vector3Int.right).name == "pool") || 
+            (map.GetTile(location+Vector3Int.down) && map.GetTile(location+Vector3Int.down).name == "pool") || 
+            (map.GetTile(location+Vector3Int.left) && map.GetTile(location+Vector3Int.left).name == "pool"))
         {
             _visited.Clear();
             return true;
         }
-        
-        if (map.GetTile(location+Vector3Int.up).name == "root" && _visited.Contains(location+Vector3Int.up))
+        _visited.Add(location);
+        if (map.GetTile(location+Vector3Int.up) && map.GetTile(location+Vector3Int.up).name == "root" && !_visited.Contains(location+Vector3Int.up))
         {
-            _visited.Add(location+Vector3Int.up);
-            CheckToPool(location+Vector3Int.up);
-            _visited.Remove(location+Vector3Int.up);
+            // _visited.Add(location+Vector3Int.up);
+            if(CheckToPool(location+Vector3Int.up))
+                return true;
+            // _visited.Remove(location+Vector3Int.up);
         }
-        if (map.GetTile(location+Vector3Int.right).name == "root" && _visited.Contains(location+Vector3Int.right))
+        if (map.GetTile(location+Vector3Int.right) && map.GetTile(location+Vector3Int.right).name == "root" && !_visited.Contains(location+Vector3Int.right))
         {
-            _visited.Add(location+Vector3Int.right);
-            CheckToPool(location+Vector3Int.right);
-            _visited.Remove(location+Vector3Int.right);
+            // _visited.Add(location+Vector3Int.right);
+            if(CheckToPool(location+Vector3Int.right))
+                return true;
+            // _visited.Remove(location+Vector3Int.right);
         }
-        if (map.GetTile(location+Vector3Int.down).name == "root" && _visited.Contains(location+Vector3Int.down))
+        if (map.GetTile(location+Vector3Int.down) && map.GetTile(location+Vector3Int.down).name == "root" && !_visited.Contains(location+Vector3Int.down))
         {
-            _visited.Add(location+Vector3Int.down);
-            CheckToPool(location+Vector3Int.down);
-            _visited.Remove(location+Vector3Int.down);
+            // _visited.Add(location+Vector3Int.down);
+            if(CheckToPool(location+Vector3Int.down))
+                return true;
+            // _visited.Remove(location+Vector3Int.down);
         }
-        if (map.GetTile(location+Vector3Int.left).name == "root" && _visited.Contains(location+Vector3Int.left))
+        if (map.GetTile(location+Vector3Int.left) && map.GetTile(location+Vector3Int.left).name == "root" && !_visited.Contains(location+Vector3Int.left))
         {
-            _visited.Add(location+Vector3Int.left);
-            CheckToPool(location+Vector3Int.left);
-            _visited.Remove(location+Vector3Int.left);
+            // _visited.Add(location+Vector3Int.left);
+            if(CheckToPool(location+Vector3Int.left))
+                return true;
+            // _visited.Remove(location+Vector3Int.left);
         }
+        _visited.Remove(location);
         return false;
     }
 }

@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3374517296846029826
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8692135610019918453}
-  m_Layer: 0
-  m_Name: GetObjectPositionRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8692135610019918453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3374517296846029826}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.86, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5611648156388946684}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5611648156388946681
 GameObject:
   m_ObjectHideFlags: 0
@@ -46,7 +15,7 @@ GameObject:
   - component: {fileID: 5611648156388946680}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +33,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5611648157247400285}
-  - {fileID: 8692135610019918453}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -108,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -185,13 +153,14 @@ MonoBehaviour:
   rotationSpeed: 1000
   bulletSpeed: 15
   bulletPrefab: {fileID: 0}
-  GetObjectPositionRoot: {fileID: 8692135610019918453}
+  GetObjectPositionRoot: {fileID: 0}
   GetObjectPosition: {fileID: 0}
+  pickedObject: {fileID: 0}
   yVelocity: 0
   floormap: {fileID: 0}
   boxmap: {fileID: 0}
   floor: {fileID: 0}
-  box: {fileID: 0}
+  box: {fileID: 11400000, guid: 5c34833512ff3c147b5aa6a27099bde3, type: 2}
   current_face_tile: {fileID: 0}
   current_face_object: {fileID: 0}
   hold_block: {fileID: 0}
@@ -209,7 +178,7 @@ GameObject:
   - component: {fileID: 5611648157247400258}
   m_Layer: 0
   m_Name: interact_block
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

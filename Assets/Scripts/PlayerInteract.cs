@@ -24,7 +24,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision == null) return;
+        if (collision == null || collision.transform.tag == "Player") return;
         player.current_face_object = collision.gameObject;
         Debug.Log(collision.gameObject.name);
     }
