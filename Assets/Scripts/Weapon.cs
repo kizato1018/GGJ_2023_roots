@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon : Object
 {
+    public int attackValue = 1;
     public float angle;
     public float radius;
     public LayerMask enemyLayer;
@@ -36,6 +37,8 @@ public class Weapon : Object
             if (Vector2.Angle(direction, hitDirection) <= angle / 2)
             {
                 Debug.Log("Enemy found inside fan");
+                BattleAction ba = hit.gameObject.GetComponent<BattleAction>();
+                if (ba!=null) ba.UnderAttack(attackValue);
                 return;
             }
         }

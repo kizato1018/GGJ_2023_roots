@@ -7,6 +7,11 @@ public interface ObjectSkill
     public void UseSkill(GameObject owner);
 }
 
+public interface BattleAction
+{
+    public void UnderAttack(int damage);
+}
+
 public class Object : MonoBehaviour, ObjectSkill
 {
     protected GameObject _owner;
