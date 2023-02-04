@@ -61,7 +61,11 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1); //等候一秒再次執行
                        
         }
-        Pause();                   //時間結束時，控制遊戲暫停無法操作
+        Finish();                   //時間結束時，控制遊戲暫停無法操作
+    }
+    public void Finish() {
+        print("Game End");
+        Time.timeScale = 0;
     }
 
     public void Pause() {
