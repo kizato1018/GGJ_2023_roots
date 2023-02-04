@@ -134,9 +134,16 @@ public class Player : MonoBehaviour
             putDown();
         }
 
-        if (use && pickedObject != null && pickedObject.tag == "Kettle")
+        if (use && pickedObject != null)
         {
-            interact_block.SetTile(box);
+            if (pickedObject.tag == "Kettle")
+            {
+                interact_block.SetTile(box);
+            }
+            else if (pickedObject.tag == "Weapon")
+            {
+                pickedObject.GetComponent<ObjectSkill>().UseSkill(gameObject);
+            }
         }
     }
 
@@ -172,6 +179,8 @@ public class Player : MonoBehaviour
         collider.transform.localPosition = Vector3.zero;
         collider.GetComponent<BoxCollider2D>().enabled = false;
         pickedObject = collider.gameObject;
+        Object obj = pickedObject.GetComponent<Object>();
+        if (obj) pickedObject.GetComponent<Object>().SetOwner(gameObject);
     }
 
     private void putDown()
@@ -179,6 +188,8 @@ public class Player : MonoBehaviour
         Debug.Log("putDown");
         pickedObject.transform.parent = null;
         pickedObject.GetComponent<BoxCollider2D>().enabled = true;
+        Object obj = pickedObject.GetComponent<Object>();
+        if (obj) pickedObject.GetComponent<Object>().SetOwner(null);
         pickedObject = null;
     }
 

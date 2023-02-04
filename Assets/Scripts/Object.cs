@@ -4,11 +4,12 @@ using UnityEngine;
 
 public interface ObjectSkill
 {
-    public void UseSkill();
+    public void UseSkill(GameObject owner);
 }
 
 public class Object : MonoBehaviour, ObjectSkill
 {
+    protected GameObject _owner;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,12 @@ public class Object : MonoBehaviour, ObjectSkill
 
     }
 
-    public void UseSkill()
+    public void SetOwner(GameObject owner)
+    {
+        _owner = owner;
+    }
+
+    public virtual void UseSkill(GameObject owner)
     {
     }
 }
