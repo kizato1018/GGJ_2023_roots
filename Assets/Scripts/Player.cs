@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
         {
             //z = -Vector3.Angle(Vector3.right, v3);
             //SmoothRotationY(90);
-            sprite_renderer.flipX= true;
+            sprite_renderer.flipX = true;
         }
         else
         {
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
             if (pickedObject.tag == "Kettle")
             {
                 print("use Kettle");
-                if(RootsManager.instance.CanCreateRoot(interact_block.transform.position))
+                if (RootsManager.instance.CanCreateRoot(interact_block.transform.position))
                 {
                     print("Can create root");
                     RootsManager.instance.CreateRoot(interact_block.transform.position);
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
             }
             else if (pickedObject.tag == "Weapon")
             {
-                pickedObject.GetComponent<ObjectSkill>().UseSkill(gameObject);
+                pickedObject.GetComponent<ObjectSkill>().UseSkill(interact_block.gameObject);
             }
         }
     }
@@ -214,9 +214,10 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (interact_block == null) return;
         Vector3 origin = new Vector3(0, 0, 0);
         Vector3 direction = new Vector3(1, 0, 0);
-        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.matrix = interact_block.transform.localToWorldMatrix;
         Gizmos.DrawRay(origin, moveVector);
     }
 }
