@@ -16,9 +16,9 @@ TagManager:
   - UI
   - Object
   - Enemy
-  - 
-  - 
-  - 
+  - Obstacle
+  - Player
+  - Interact
   - 
   - 
   - 

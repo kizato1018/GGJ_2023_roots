@@ -22,6 +22,8 @@ public class PlayerInteract : MonoBehaviour
         player.boxmap.SetTile(location, tile);
     }
 
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision == null || collision.transform.tag == "Player" || collision.transform.tag == "Obstacle") return;
