@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rabbit : MonoBehaviour
 {
-    public float Speed=10;
+    public float Speed=1;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +14,11 @@ public class Rabbit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(0, 0, 0), Speed*Time.deltaTime);
+        Vector3 goal = RootsManager.instance.FindNearRoot(transform.position).worldPosition;
+        transform.position = Vector3.MoveTowards(transform.position, goal, Speed*Time.deltaTime);
+        // if (transform.position == goal)
+        // {
+        //     RootsManager.Tilemap
+        // }
     }
 }
