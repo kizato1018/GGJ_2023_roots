@@ -11,6 +11,8 @@ public class TreeManager : MonoBehaviour
 
     public int maxWaterValue = 100;
     public int waterValue = 0;
+    public List<PoolController> AllPoolControllerList = new List<PoolController>();
+
     public List<PoolController> PoolControllerList = new List<PoolController>();
 
     void Awake()
@@ -52,10 +54,11 @@ public class TreeManager : MonoBehaviour
                 data.waterValue--;
                 waterValue++;
             }
+            print(data.waterValue);
         }
         if (waterValue >= maxWaterValue)
         {
-            Debug.Log("º¡¤F");
+            Debug.Log("ï¿½ï¿½ï¿½F");
         }
         else
         {

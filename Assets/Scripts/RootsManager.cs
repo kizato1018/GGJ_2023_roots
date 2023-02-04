@@ -43,17 +43,24 @@ public class RootsManager : MonoBehaviour
     public bool CanCreateRoot(Vector3 pos)
     {
         Vector3Int location = map.WorldToCell(pos);
+
+        Vector3Int up = location+Vector3Int.up;
+        Vector3Int right = location+Vector3Int.right;
+        Vector3Int down = location+Vector3Int.down;
+        Vector3Int left = location+Vector3Int.left;
+
         return map.GetTile(location) == null && (
-               (map.GetTile(location+Vector3Int.up) && map.GetTile(location+Vector3Int.up).name == "root") || 
-               (map.GetTile(location+Vector3Int.right) && map.GetTile(location+Vector3Int.right).name == "root") || 
-               (map.GetTile(location+Vector3Int.down) && map.GetTile(location+Vector3Int.down).name == "root") || 
-               (map.GetTile(location+Vector3Int.left) && map.GetTile(location+Vector3Int.left).name == "root"));
+               (map.GetTile(up) && map.GetTile(up).name == "root") || 
+               (map.GetTile(right) && map.GetTile(right).name == "root") || 
+               (map.GetTile(down) && map.GetTile(down).name == "root") || 
+               (map.GetTile(left) && map.GetTile(left).name == "root"));
     }
 
     public void CreateRoot(Vector3 pos)
     {
         RootData rootData = new RootData(pos, map);
         RootDatas.Add(rootData);
+        CheckAllRoots();
     }
     public void DeleteRoot(Vector3 pos) {
         RootData rootData = new RootData(pos, map);
@@ -65,8 +72,20 @@ public class RootsManager : MonoBehaviour
                 break;
             }
         }
+        CheckAllRoots();
     }
-
+    public void CheckAllRoots() {
+        for(int i = 0; i < Start_RootDatas.Count; ++i) {
+            PoolController pc = CheckToPool(RootDatas[i].v3IntPosition);
+            print(pc);
+            if (pc != null) 
+            {
+                TreeManager.instance.StartAddWater(pc);
+                print("Connected!!");
+            }
+            _visited.Clear();
+        }
+    }
     public RootData FindNearRoot(Vector3 pos)
     {
         RootData near_root = null;
@@ -95,46 +114,69 @@ public class RootsManager : MonoBehaviour
         return new RootData(pos, map);
     }
 
-    public bool CheckToPool(Vector3Int location)
+    public PoolController CheckToPool(Vector3Int location)
     {
-        if ((map.GetTile(location+Vector3Int.up) && map.GetTile(location+Vector3Int.up).name == "pool") || 
-            (map.GetTile(location+Vector3Int.right) && map.GetTile(location+Vector3Int.right).name == "pool") || 
-            (map.GetTile(location+Vector3Int.down) && map.GetTile(location+Vector3Int.down).name == "pool") || 
-            (map.GetTile(location+Vector3Int.left) && map.GetTile(location+Vector3Int.left).name == "pool"))
+
+        Vector3Int up = location+Vector3Int.up;
+        Vector3Int right = location+Vector3Int.right;
+        Vector3Int down = location+Vector3Int.down;
+        Vector3Int left = location+Vector3Int.left;
+
+        if ((map.GetTile(up) && map.GetTile(up).name == "pool") || 
+            (map.GetTile(right) && map.GetTile(right).name == "pool") || 
+            (map.GetTile(down) && map.GetTile(down).name == "pool") || 
+            (map.GetTile(left) && map.GetTile(left).name == "pool"))
         {
-            _visited.Clear();
-            return true;
+            
+            print("is POOL 1!");
+            return TreeManager.instance.AllPoolControllerList[0];
         }
+
+        if ((map.GetTile(up) && map.GetTile(up).name == "pool1") || 
+            (map.GetTile(right) && map.GetTile(right).name == "pool1") || 
+            (map.GetTile(down) && map.GetTile(down).name == "pool1") || 
+            (map.GetTile(left) && map.GetTile(left).name == "pool1"))
+        {
+            print("is POOL 2!");
+            return TreeManager.instance.AllPoolControllerList[1];
+        }
+
+        if ((map.GetTile(up) && map.GetTile(up).name == "pool2") || 
+            (map.GetTile(right) && map.GetTile(right).name == "pool2") || 
+            (map.GetTile(down) && map.GetTile(down).name == "pool2") || 
+            (map.GetTile(left) && map.GetTile(left).name == "pool2"))
+        {
+
+            print("is POOL 2!");
+            return TreeManager.instance.AllPoolControllerList[2];
+        }
+
         _visited.Add(location);
-        if (map.GetTile(location+Vector3Int.up) && map.GetTile(location+Vector3Int.up).name == "root" && !_visited.Contains(location+Vector3Int.up))
+        if (map.GetTile(up) && map.GetTile(up).name == "root" && !_visited.Contains(up))
         {
-            // _visited.Add(location+Vector3Int.up);
-            if(CheckToPool(location+Vector3Int.up))
-                return true;
-            // _visited.Remove(location+Vector3Int.up);
+            PoolController pc = CheckToPool(up);
+            if(pc)
+                return pc;
         }
-        if (map.GetTile(location+Vector3Int.right) && map.GetTile(location+Vector3Int.right).name == "root" && !_visited.Contains(location+Vector3Int.right))
+        if (map.GetTile(right) && map.GetTile(right).name == "root" && !_visited.Contains(right))
         {
-            // _visited.Add(location+Vector3Int.right);
-            if(CheckToPool(location+Vector3Int.right))
-                return true;
-            // _visited.Remove(location+Vector3Int.right);
+            PoolController pc = CheckToPool(right);
+            if(pc)
+                return pc;
         }
-        if (map.GetTile(location+Vector3Int.down) && map.GetTile(location+Vector3Int.down).name == "root" && !_visited.Contains(location+Vector3Int.down))
+        if (map.GetTile(down) && map.GetTile(down).name == "root" && !_visited.Contains(down))
         {
-            // _visited.Add(location+Vector3Int.down);
-            if(CheckToPool(location+Vector3Int.down))
-                return true;
-            // _visited.Remove(location+Vector3Int.down);
+            PoolController pc = CheckToPool(down);
+            if(pc)
+                return pc;
         }
-        if (map.GetTile(location+Vector3Int.left) && map.GetTile(location+Vector3Int.left).name == "root" && !_visited.Contains(location+Vector3Int.left))
+        if (map.GetTile(left) && map.GetTile(left).name == "root" && !_visited.Contains(left))
         {
-            // _visited.Add(location+Vector3Int.left);
-            if(CheckToPool(location+Vector3Int.left))
-                return true;
-            // _visited.Remove(location+Vector3Int.left);
+            PoolController pc = CheckToPool(left);
+            if(pc)
+                return pc;
         }
         _visited.Remove(location);
-        return false;
+        return null;
     }
 }

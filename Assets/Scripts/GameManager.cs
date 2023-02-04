@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
             m_min = m_seconds / 60;
             m_sec = m_seconds % 60;
             m_timer.text = string.Format("{0}:{1}", m_min.ToString("00"), m_sec.ToString("00"));
-            print(m_seconds);
+            // print(m_seconds);
 
             yield return new WaitForSeconds(1); //等候一秒再次執行
                        
