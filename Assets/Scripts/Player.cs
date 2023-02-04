@@ -48,12 +48,14 @@ public class Player : MonoBehaviour
     private bool _catch;
     private bool is_hold;
     private bool use;
+    private SpriteRenderer sprite_renderer;
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
         is_hold = false;
         interact_block = gameObject.GetComponentInChildren<PlayerInteract>();
+        sprite_renderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -70,9 +72,11 @@ public class Player : MonoBehaviour
         {
             //z = -Vector3.Angle(Vector3.right, v3);
             //SmoothRotationY(90);
+            sprite_renderer.flipX= true;
         }
         else
         {
+            sprite_renderer.flipX = false;
             //z = Vector3.Angle(Vector3.right, v3);
         }
         if (v3.y > 0)
