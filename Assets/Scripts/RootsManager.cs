@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[System.Serializable]
 public class RootData
 {
     public RootData(Vector3 _worldPosition, Tilemap map)
@@ -54,11 +55,22 @@ public class RootsManager : MonoBehaviour
         RootData rootData = new RootData(pos, map);
         RootDatas.Add(rootData);
     }
+    public void DeleteRoot(Vector3 pos) {
+        RootData rootData = new RootData(pos, map);
+        map.SetTile(rootData.v3IntPosition, null);
+        foreach (RootData rd in RootDatas)
+        {
+            if (rd.v3IntPosition == rootData.v3IntPosition) {
+                RootDatas.Remove(rd);
+                break;
+            }
+        }
+    }
 
     public RootData FindNearRoot(Vector3 pos)
     {
         RootData near_root = null;
-        float min_distance = -1.0f;
+        float min_distance = 999.0f;
         for(int i = Start_RootDatas.Count; i < RootDatas.Count; i++) {
             if(near_root == null)
             {
@@ -67,11 +79,11 @@ public class RootsManager : MonoBehaviour
             }
             else
             {
-                float distance = Vector3.Distance(pos, near_root.worldPosition);
+                float distance = Vector3.Distance(pos, RootDatas[i].worldPosition);
                 if (distance < min_distance)
                 {
                     near_root = RootDatas[i];
-                    min_distance = Vector3.Distance(pos, near_root.worldPosition);
+                    min_distance = distance;
                 }
             }
         }
