@@ -120,27 +120,27 @@ public class Player : MonoBehaviour
         }
 
         // Process fire
-        if (fire && pickedObject == null)
+        if (use && pickedObject == null)
         {
             //GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
             //bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
             pick();
         }
-        else if (fire && pickedObject != null)
+        else if (use && pickedObject != null)
         {
             putDown(); 
         }
 
-        if (use)
-        {
-            if(is_hold == false && current_face.name == "box"){
-                print("hit box");
-                hold_block = current_face;
-                is_hold = true;
-            }
-            // GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
-            // bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
-        }
+        //if (use)
+        //{
+        //    if(is_hold == false && current_face.name == "box"){
+        //        print("hit box");
+        //        hold_block = current_face;
+        //        is_hold = true;
+        //    }
+        //    // GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
+        //    // bullet.GetComponent<Rigidbody>().AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
+        //}
     }
 
     private void handleInteraction()
