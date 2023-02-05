@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> rabbits_gameobject_;
     public List<GameObject> players_gameobject_;
     public GameObject game_over_obj;
+    public GameObject game_win_obj;
 
     static public GameManager instance;
     private List<Character> players_;
@@ -36,13 +37,14 @@ public class GameManager : MonoBehaviour
     // 遊戲進行時長
     [HideInInspector] public int m_seconds;
 
-    public TMP_Text m_timer;           //設定畫面倒數計時的文字
+    public Text m_timer;           //設定畫面倒數計時的文字
 
     private void Awake() {
         
     }
     void Start() {
-        // game_over_obj.SetActive(false);
+        game_over_obj.SetActive(false);
+        game_win_obj.SetActive(false);
         m_seconds = 0;
         StartCoroutine(Countdown());
     }
@@ -66,6 +68,20 @@ public class GameManager : MonoBehaviour
     }
     public void Finish() {
         print("Game End");
+        game_over_obj.SetActive(true);
+        game_win_obj.SetActive(false);
+        Time.timeScale = 0;
+    }
+
+    /// <summary>
+    /// 判斷勝利條件達成時call這個
+    /// </summary>
+    public void GameWin()
+    {
+        StopCoroutine(Countdown());
+        print("Game Win");
+        game_over_obj.SetActive(false);
+        game_win_obj.SetActive(true);
         Time.timeScale = 0;
     }
 

@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
         if (current_face_object.layer != 6) return; // Object layer
         pickedObject = current_face_object;
         current_face_object.GetComponent<BoxCollider2D>().enabled = false;
-        pickedObject.transform.SetParent(interact_block.transform);
+        pickedObject.transform.SetParent(transform);
         pickedObject.transform.localPosition = Vector3.zero;
         pickedObject.transform.localRotation = Quaternion.identity;
         Object obj = pickedObject.GetComponent<Object>();
