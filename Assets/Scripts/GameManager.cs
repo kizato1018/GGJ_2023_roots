@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         game_over_obj.SetActive(true);
         game_win_obj.SetActive(false);
         Time.timeScale = 0;
-        AudioManager.instance.PlayBgm("Happy Alley");
+        AudioManager.instance.StopBgm();
     }
 
     /// <summary>
