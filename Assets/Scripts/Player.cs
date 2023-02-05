@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
         {
             if (pickedObject.tag == "Kettle")
             {
+                animator.SetTrigger("wave_kettle");
                 // print("use Kettle");
                 AudioManager.instance.PlaySound("371274__mafon2__water-click");
                 if (RootsManager.instance.CanCreateRoot(interact_block.transform.position))
@@ -135,7 +136,7 @@ public class Player : MonoBehaviour
             }
             else if (pickedObject.tag == "Weapon")
             {
-                animator.SetTrigger("wave");
+                animator.SetTrigger("wave_fish");
                 pickedObject.GetComponent<ObjectSkill>().UseSkill(interact_block.gameObject);
             }
         }
@@ -174,6 +175,7 @@ public class Player : MonoBehaviour
         if (current_face_object == null) return;
         if (current_face_object.layer != 6) return; // Object layer
         pickedObject = current_face_object;
+        pickedObject.GetComponent<SpriteRenderer>().enabled = false;
         current_face_object.GetComponent<BoxCollider2D>().enabled = false;
         pickedObject.transform.SetParent(transform);
         pickedObject.transform.localPosition = Vector3.zero;
@@ -186,6 +188,7 @@ public class Player : MonoBehaviour
     {
         AudioManager.instance.PlaySound("126489__ayavaron__key_drop-01");
         // Debug.Log("putDown");
+        pickedObject.GetComponent<SpriteRenderer>().enabled = true;
         pickedObject.transform.parent = null;
         pickedObject.transform.rotation = Quaternion.identity;
         pickedObject.GetComponent<BoxCollider2D>().enabled = true;
