@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9111650242041213329
 RectTransform:
   m_ObjectHideFlags: 0
@@ -147,8 +147,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterValue: 50
+  percentage: 50
   isConnect: 0
   waterValueText: {fileID: 2667707356871627210}
+  poolSprite: {fileID: 5113243005151185170}
+  poolSprites:
+  - {fileID: 21300000, guid: b4add13aa47e6be4297dd2f0b50e4e9a, type: 3}
+  - {fileID: 21300000, guid: 4d71e622857a3f840a4e72d869e8ee23, type: 3}
 --- !u!1 &5113243005151185168
 GameObject:
   m_ObjectHideFlags: 0

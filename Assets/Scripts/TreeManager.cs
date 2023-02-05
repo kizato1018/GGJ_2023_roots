@@ -11,9 +11,14 @@ public class TreeManager : MonoBehaviour
 
     public int maxWaterValue = 100;
     public int waterValue = 0;
+    public int percentage1 = 50;
+    public int percentage2 = 50;
     public List<PoolController> AllPoolControllerList = new List<PoolController>();
 
     public List<PoolController> PoolControllerList = new List<PoolController>();
+
+    public SpriteRenderer treeSprite;
+    public List<Sprite> treeSprites = new List<Sprite>();
 
     void Awake()
     {
@@ -28,7 +33,18 @@ public class TreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (waterValue > (maxWaterValue * percentage2 / 100))
+        {
+            treeSprite.sprite = treeSprites[0];
+        }
+        else if(waterValue > (maxWaterValue * percentage2 / 100) && waterValue < (maxWaterValue * percentage1 / 100))
+        {
+            treeSprite.sprite = treeSprites[1];
+        }
+        else
+        {
+            treeSprite.sprite = treeSprites[2];
+        }
     }
 
     public void StartAddWater(PoolController poolController)

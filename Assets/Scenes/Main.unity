@@ -1621,6 +1621,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 332897581664006716, guid: d05dd7409d794914f806f65260e6d4b9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 332897581664006717, guid: d05dd7409d794914f806f65260e6d4b9, type: 3}
       propertyPath: m_Name
       value: Instantiate_Positions
@@ -1869,6 +1873,10 @@ PrefabInstance:
     - target: {fileID: 5113243005028788445, guid: a3bb3f3ba2790c34aa31afd8b8c9cab8, type: 3}
       propertyPath: m_Name
       value: PoolController
+      objectReference: {fileID: 0}
+    - target: {fileID: 5113243005028788446, guid: a3bb3f3ba2790c34aa31afd8b8c9cab8, type: 3}
+      propertyPath: waterValue
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5113243005028788447, guid: a3bb3f3ba2790c34aa31afd8b8c9cab8, type: 3}
       propertyPath: m_RootOrder
