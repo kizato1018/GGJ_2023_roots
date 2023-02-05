@@ -63,7 +63,7 @@ public class Rabbit : MonoBehaviour, BattleAction
         else
         {
             animator.SetTrigger("hurt");
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
         }
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
