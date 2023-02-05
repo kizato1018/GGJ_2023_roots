@@ -28,7 +28,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if (collision == null || collision.transform.tag == "Player" || collision.transform.tag == "Obstacle") return;
         player.current_face_object = collision.gameObject;
-        Debug.Log(collision.gameObject.name);
+        // Debug.Log(collision.gameObject.name);
     }
     private void OnCollisionExit2D(Collision2D collision)
     {

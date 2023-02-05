@@ -22,6 +22,7 @@ public class RootsManager : MonoBehaviour
     public List<RootData> RootDatas = new List<RootData>();
     private List<Vector3Int> _visited = new List<Vector3Int>();
     // Start is called before the first frame update
+    private bool is_connected = false;
     void Awake()
     {
         instance = this;
@@ -59,12 +60,18 @@ public class RootsManager : MonoBehaviour
 
     public void CreateRoot(Vector3 pos)
     {
+        bool current_connect = is_connected;
         RootData rootData = new RootData(pos, map);
         RootDatas.Add(rootData);
-        CheckAllRoots();
+        is_connected = CheckToPool(rootData.v3IntPosition);
+        if(current_connect != is_connected)
+        {
+            Debug.Log("連上水池");
+        }
     }
     public void DeleteRoot(Vector3 pos)
     {
+        bool current_connect = is_connected;
         RootData rootData = new RootData(pos, map);
         map.SetTile(rootData.v3IntPosition, null);
         foreach (RootData rd in RootDatas)
@@ -75,18 +82,10 @@ public class RootsManager : MonoBehaviour
                 break;
             }
         }
-        CheckAllRoots();
-    }
-    public void CheckAllRoots() {
-        for(int i = 0; i < Start_RootDatas.Count; ++i) {
-            PoolController pc = CheckToPool(RootDatas[i].v3IntPosition);
-            print(pc);
-            if (pc != null) 
-            {
-                TreeManager.instance.StartAddWater(pc);
-                print("Connected!!");
-            }
-            _visited.Clear();
+        is_connected = CheckToPool(rootData.v3IntPosition);
+         if(current_connect != is_connected)
+        {
+            Debug.Log("斷開水池");
         }
     }
 

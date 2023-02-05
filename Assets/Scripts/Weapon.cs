@@ -8,6 +8,7 @@ public class Weapon : Object
     public float angle;
     public float radius;
     public LayerMask enemyLayer;
+    public LayerMask obstacleLayer;
 
     // Update is called once per frame
     void Update()
@@ -26,6 +27,19 @@ public class Weapon : Object
 
         // 检查扇形内是否有敌人碰撞体
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, radius, enemyLayer);
+        foreach (Collider2D hit in hits)
+        {
+            Vector2 hitDirection = (Vector2)hit.transform.position - origin;
+            if (Vector2.Angle(direction, hitDirection) <= angle / 2)
+            {
+                Debug.Log("Enemy found inside fan");
+                BattleAction ba = hit.gameObject.GetComponent<BattleAction>();
+                if (ba!=null) ba.UnderAttack(attackValue);
+            }
+        }
+
+        // 检查扇形内是否有障礙物碰撞体
+        hits = Physics2D.OverlapCircleAll(origin, radius, obstacleLayer);
         foreach (Collider2D hit in hits)
         {
             Vector2 hitDirection = (Vector2)hit.transform.position - origin;

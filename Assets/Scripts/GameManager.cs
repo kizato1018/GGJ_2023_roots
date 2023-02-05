@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         
     }
     void Start() {
-        game_over_obj.SetActive(false);
+        // game_over_obj.SetActive(false);
         m_seconds = 0;
         StartCoroutine(Countdown());
     }

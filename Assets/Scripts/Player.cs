@@ -118,16 +118,16 @@ public class Player : MonoBehaviour
         {
             if (pickedObject.tag == "Kettle")
             {
-                print("use Kettle");
+                // print("use Kettle");
                 if (RootsManager.instance.CanCreateRoot(interact_block.transform.position))
                 {
-                    print("Can create root");
+                    // print("Can create root");
                     RootsManager.instance.CreateRoot(interact_block.transform.position);
                     interact_block.SetTile(box);
                     //print(RootsManager.instance.CheckToPool(RootsManager.instance.RootDatas[0].v3IntPosition));
                     if (RootsManager.instance.CheckToPool(RootsManager.instance.RootDatas[0].v3IntPosition))
                     {
-                        Debug.Log("連上水池");
+                        // Debug.Log("連上水池");
                         //TODO 判斷是連上哪個水池
                         //TreeManager.instance.StartAddWater();
                     }
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
 
     private void pick()
     {
-        Debug.Log("pick");
+        // Debug.Log("pick");
         if (current_face_object == null) return;
         if (current_face_object.layer != 6) return; // Object layer
         pickedObject = current_face_object;
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
 
     private void putDown()
     {
-        Debug.Log("putDown");
+        // Debug.Log("putDown");
         pickedObject.transform.parent = null;
         pickedObject.transform.rotation = Quaternion.identity;
         pickedObject.GetComponent<BoxCollider2D>().enabled = true;

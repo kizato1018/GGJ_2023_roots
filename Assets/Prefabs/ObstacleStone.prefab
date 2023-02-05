@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5015606229755817958}
   - component: {fileID: 5015606229755817977}
   - component: {fileID: 5015606229755817976}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: ObstacleStone
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -125,3 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 3
+  indestructible: 0
