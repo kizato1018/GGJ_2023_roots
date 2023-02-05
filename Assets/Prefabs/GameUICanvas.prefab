@@ -493,7 +493,6 @@ MonoBehaviour:
   game_over_obj: {fileID: 7248379308933042390}
   game_win_obj: {fileID: 7248379308613603587}
   total_seconds: 90
-  m_seconds: 1000000
   m_timer: {fileID: 8088058671921369779}
 --- !u!1 &7248379308541069827
 GameObject:
@@ -690,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -836,7 +835,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -707.03815, y: -437.07812, z: -707.0381, w: -424.22278}
+  m_margin: {x: -707.03815, y: -437.07812, z: -707.0381, w: 4.914917}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

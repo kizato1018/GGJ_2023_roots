@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public Text m_timer;           //設定畫面倒數計時的文字
 
     private void Awake() {
-        
+        instance = this;
     }
     void Start() {
         game_over_obj.SetActive(false);

@@ -33,17 +33,17 @@ public class TreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (waterValue > (maxWaterValue * percentage2 / 100))
+        if (waterValue >= (maxWaterValue * percentage2 / 100))
         {
-            treeSprite.sprite = treeSprites[0];
+            treeSprite.sprite = treeSprites[2];
         }
-        else if(waterValue > (maxWaterValue * percentage2 / 100) && waterValue < (maxWaterValue * percentage1 / 100))
+        else if(waterValue >= (maxWaterValue * percentage1 / 100) && waterValue < (maxWaterValue * percentage2 / 100))
         {
             treeSprite.sprite = treeSprites[1];
         }
         else
         {
-            treeSprite.sprite = treeSprites[2];
+            treeSprite.sprite = treeSprites[0];
         }
     }
 
@@ -70,6 +70,11 @@ public class TreeManager : MonoBehaviour
                 {
                     pc.waterValue--;
                     waterValue++;
+                    if(waterValue >= maxWaterValue)
+                    {
+                        GameManager.instance.GameWin();
+                        yield break;
+                    }
                 }
                 print(pc.waterValue);
             }
