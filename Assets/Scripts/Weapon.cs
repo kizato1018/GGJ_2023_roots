@@ -13,7 +13,7 @@ public class Weapon : Object
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public override void UseSkill(GameObject owner)
@@ -35,7 +35,7 @@ public class Weapon : Object
             {
                 Debug.Log("Enemy found inside fan");
                 BattleAction ba = hit.gameObject.GetComponent<BattleAction>();
-                if (ba!=null) StartCoroutine( ba.UnderAttack(attackValue));
+                if (ba != null) StartCoroutine(ba.UnderAttack(attackValue));
             }
         }
 
@@ -48,7 +48,7 @@ public class Weapon : Object
             {
                 Debug.Log("Enemy found inside fan");
                 BattleAction ba = hit.gameObject.GetComponent<BattleAction>();
-                if (ba!=null) ba.UnderAttack(attackValue);
+                if (ba != null) StartCoroutine(ba.UnderAttack(attackValue));
             }
         }
         Debug.Log("No enemy found inside fan");
@@ -56,7 +56,7 @@ public class Weapon : Object
 
     private void OnDrawGizmos()
     {
-        if(_owner ==null) return;
+        if (_owner == null) return;
         Vector2 origin = _owner.transform.parent.parent.position;
         Vector2 direction = _owner.transform.up;
 
