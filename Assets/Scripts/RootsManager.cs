@@ -28,7 +28,7 @@ public class RootsManager : MonoBehaviour
     }
     void Start()
     {
-        foreach(Transform start in Start_RootDatas)
+        foreach (Transform start in Start_RootDatas)
         {
             CreateRoot(start.position);
         }
@@ -37,7 +37,7 @@ public class RootsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public bool CanCreateRoot(Vector3 pos)
@@ -48,7 +48,8 @@ public class RootsManager : MonoBehaviour
         Vector3Int right = location+Vector3Int.right;
         Vector3Int down = location+Vector3Int.down;
         Vector3Int left = location+Vector3Int.left;
-
+        TileBase tile = map.GetTile(location);
+        if (tile != null && tile.name == "obstacle") return false;
         return map.GetTile(location) == null && (
                (map.GetTile(up) && map.GetTile(up).name == "root") || 
                (map.GetTile(right) && map.GetTile(right).name == "root") || 
@@ -62,12 +63,14 @@ public class RootsManager : MonoBehaviour
         RootDatas.Add(rootData);
         CheckAllRoots();
     }
-    public void DeleteRoot(Vector3 pos) {
+    public void DeleteRoot(Vector3 pos)
+    {
         RootData rootData = new RootData(pos, map);
         map.SetTile(rootData.v3IntPosition, null);
         foreach (RootData rd in RootDatas)
         {
-            if (rd.v3IntPosition == rootData.v3IntPosition) {
+            if (rd.v3IntPosition == rootData.v3IntPosition)
+            {
                 RootDatas.Remove(rd);
                 break;
             }
@@ -86,12 +89,20 @@ public class RootsManager : MonoBehaviour
             _visited.Clear();
         }
     }
+
+    public void DeleteObstacle(Vector3 worldPosition)
+    {
+        Vector3Int v3IntPosition = map.WorldToCell(worldPosition);
+        map.SetTile(v3IntPosition, null);
+    }
+
     public RootData FindNearRoot(Vector3 pos)
     {
         RootData near_root = null;
         float min_distance = 999.0f;
-        for(int i = Start_RootDatas.Count; i < RootDatas.Count; i++) {
-            if(near_root == null)
+        for (int i = Start_RootDatas.Count; i < RootDatas.Count; i++)
+        {
+            if (near_root == null)
             {
                 near_root = RootDatas[i];
                 min_distance = Vector3.Distance(pos, near_root.worldPosition);

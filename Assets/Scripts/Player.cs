@@ -16,31 +16,17 @@ public class Player : MonoBehaviour
     // The rotation speed of this character
     public float rotationSpeed = 3.0f;
 
-    // The bullet speed
-    public float bulletSpeed = 15.0f;
-
-
-
-    // Assign a prefab to this in the inspector.
-    // The prefab must have a Rigidbody component on it in order to work.
-    public GameObject bulletPrefab;
-
-    public Transform GetObjectPositionRoot;
-    public Transform GetObjectPosition;
+    public Transform interact_block_root;
 
     private Rewired.Player player; // The Rewired Player
     private Vector3 moveVector;
     private Vector3 lastMoveVector;
-    private bool fire;
-    private Collider2D collider;
     public GameObject pickedObject;
-    private float rotateSpeed = 0.1f;
-    [SerializeField] private float yVelocity = 0.0f;
 
     public Tilemap floormap;
     public Tilemap boxmap;
     public Tile floor;
-    public Tile box;
+    public TileBase box;
     public TileBase current_face_tile;
     public GameObject current_face_object;
     public GameObject hold_block;
@@ -49,6 +35,8 @@ public class Player : MonoBehaviour
     private bool is_hold;
     private bool use;
     private SpriteRenderer sprite_renderer;
+    private Animator animator;
+
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -56,6 +44,12 @@ public class Player : MonoBehaviour
         is_hold = false;
         interact_block = gameObject.GetComponentInChildren<PlayerInteract>();
         sprite_renderer = GetComponent<SpriteRenderer>();
+        animator = gameObject.GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        boxmap = RootsManager.instance.map;
     }
 
     void Update()
@@ -66,37 +60,7 @@ public class Player : MonoBehaviour
         handleInteraction();
         ProcessInput();
 
-        float z = 0;
-        Vector3 v3 = lastMoveVector.normalized;
-        if (v3.x > 0)
-        {
-            //z = -Vector3.Angle(Vector3.right, v3);
-            //SmoothRotationY(90);
-            sprite_renderer.flipX= true;
-        }
-        else
-        {
-            sprite_renderer.flipX = false;
-            //z = Vector3.Angle(Vector3.right, v3);
-        }
-        if (v3.y > 0)
-        {
-            //z = -Vector3.Angle(Vector3.up, v3);
-        }
-        else
-        {
-            //z = Vector3.Angle(Vector3.up, v3);
-        }
-        //if (GetObjectPositionRoot)
-        //{
-        //    GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, z);
-        //    GetObjectPositionRoot.forward = Vector3.Lerp(GetObjectPositionRoot.forward, moveVector, Time.deltaTime);
-        //}
-    }
 
-    public void SmoothRotationY(float iTargetAngle)
-    {
-        GetObjectPositionRoot.eulerAngles = new Vector3(0, 0, Mathf.SmoothDampAngle(transform.eulerAngles.y, iTargetAngle, ref yVelocity, rotateSpeed));
     }
 
     private void GetInput()
@@ -144,7 +108,7 @@ public class Player : MonoBehaviour
             if (pickedObject.tag == "Kettle")
             {
                 print("use Kettle");
-                if(RootsManager.instance.CanCreateRoot(interact_block.transform.position))
+                if (RootsManager.instance.CanCreateRoot(interact_block.transform.position))
                 {
                     print("Can create root");
                     RootsManager.instance.CreateRoot(interact_block.transform.position);
@@ -160,7 +124,8 @@ public class Player : MonoBehaviour
             }
             else if (pickedObject.tag == "Weapon")
             {
-                pickedObject.GetComponent<ObjectSkill>().UseSkill(gameObject);
+                animator.SetTrigger("wave");
+                pickedObject.GetComponent<ObjectSkill>().UseSkill(interact_block.gameObject);
             }
         }
     }
@@ -171,22 +136,25 @@ public class Player : MonoBehaviour
         {
             lastMoveVector = moveVector;
         }
-        // if(current_face_object != null)
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, moveVector, 1, 1 << LayerMask.NameToLayer("Object"));
-        // if (hit)
-        // {
-        //     Debug.Log(hit.collider.name);
-        //     collider = hit.collider;
-        // }
-        // else
-        // {
-        //     collider = null;
-        //     if (current_face_tile)
-        //     {
-        //         print(current_face_tile.name);
-        //         interact_block.SetTile(box);
-        //     }
-        // }
+        if (pickedObject) pickedObject.GetComponent<Object>().SetDirection(lastMoveVector.normalized);
+        Vector3 v3 = lastMoveVector.normalized;
+        if (v3.x > 0)
+        {
+            sprite_renderer.flipX = true;
+           
+        }
+        else
+        {
+            sprite_renderer.flipX = false;
+        }
+        if (v3.y > 0)
+        {
+            //z = -Vector3.Angle(Vector3.up, v3);
+        }
+        else
+        {
+            //z = Vector3.Angle(Vector3.up, v3);
+        }
     }
 
     private void pick()
@@ -198,25 +166,28 @@ public class Player : MonoBehaviour
         current_face_object.GetComponent<BoxCollider2D>().enabled = false;
         pickedObject.transform.SetParent(interact_block.transform);
         pickedObject.transform.localPosition = Vector3.zero;
+        pickedObject.transform.localRotation = Quaternion.identity;
         Object obj = pickedObject.GetComponent<Object>();
-        if (obj) pickedObject.GetComponent<Object>().SetOwner(gameObject);
+        if (obj && interact_block.gameObject) pickedObject.GetComponent<Object>().SetOwner(interact_block.gameObject,lastMoveVector.normalized);
     }
 
     private void putDown()
     {
         Debug.Log("putDown");
         pickedObject.transform.parent = null;
+        pickedObject.transform.rotation = Quaternion.identity;
         pickedObject.GetComponent<BoxCollider2D>().enabled = true;
         Object obj = pickedObject.GetComponent<Object>();
-        if (obj) pickedObject.GetComponent<Object>().SetOwner(null);
+        if (obj) pickedObject.GetComponent<Object>().SetOwner(null, lastMoveVector.normalized);
         pickedObject = null;
     }
 
     private void OnDrawGizmos()
     {
+        //if (interact_block == null) return;
         Vector3 origin = new Vector3(0, 0, 0);
         Vector3 direction = new Vector3(1, 0, 0);
         Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.DrawRay(origin, moveVector);
+        Gizmos.DrawLine(Vector3.zero, moveVector);
     }
 }

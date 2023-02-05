@@ -8,11 +8,6 @@ public class Weapon : Object
     public float angle;
     public float radius;
     public LayerMask enemyLayer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -39,7 +34,6 @@ public class Weapon : Object
                 Debug.Log("Enemy found inside fan");
                 BattleAction ba = hit.gameObject.GetComponent<BattleAction>();
                 if (ba!=null) ba.UnderAttack(attackValue);
-                return;
             }
         }
         Debug.Log("No enemy found inside fan");

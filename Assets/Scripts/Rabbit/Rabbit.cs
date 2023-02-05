@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rabbit : MonoBehaviour
+public class Rabbit : MonoBehaviour, BattleAction
 {
+    public int hp = 5;
     public float Speed=1;
     public float sleep_time = 1.0f;
     private float sleep_timer=0.0f;
@@ -33,17 +34,31 @@ public class Rabbit : MonoBehaviour
 
             if (Vector3.Distance(transform.position,current_goal.worldPosition) < 0.01f)
             {
-                animator.SetBool("is_attacking", true);
+                animator.SetTrigger("attack");
                 sleep_timer += Time.deltaTime;
                 if(sleep_timer > sleep_time)
                 {
                     RootsManager.instance.DeleteRoot(current_goal.worldPosition);
                     sleep_timer = 0.0f;
                     current_goal = null;
-                    animator.SetBool("is_attacking", false);
+                    //animator.SetBool("is_attacking", false);
                 }
             }
         }
         // print(current_goal);
+    }
+
+    public void UnderAttack(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Died();
+        }
+    }
+
+    public void Died()
+    {
+        Destroy(gameObject);
     }
 }
