@@ -6583,12 +6583,8 @@ MonoBehaviour:
   acceleration: 100
   rotSpeed: 3
   rotationSpeed: 1000
-  bulletSpeed: 15
-  bulletPrefab: {fileID: 0}
-  GetObjectPositionRoot: {fileID: 0}
-  GetObjectPosition: {fileID: 0}
+  interact_block_root: {fileID: 0}
   pickedObject: {fileID: 0}
-  yVelocity: 0
   topSpeed: 10
   floormap: {fileID: 0}
   boxmap: {fileID: 448525435}
@@ -6756,7 +6752,11 @@ PrefabInstance:
       objectReference: {fileID: 448525435}
     - target: {fileID: 5611648156388946680, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: playerId
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611648156388946680, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
+      propertyPath: topSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5611648156388946680, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: acceleration
@@ -6813,6 +6813,10 @@ PrefabInstance:
     - target: {fileID: 5611648156388946684, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611648156388946687, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
+      propertyPath: m_LinearDrag
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5611648157247400286, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: m_Layer
@@ -7318,6 +7322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5051cbb0bbca173409872ad10f14614d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amplitude: 0.05
+  frequency: 0.1
+  offset: {x: 0, y: 0, z: 0}
   attackValue: 1
   angle: 64.55
   radius: 2.28
@@ -8661,7 +8668,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 32
+        _keyboardKeyCode: 106
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -8672,7 +8679,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 106
+        _keyboardKeyCode: 107
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -8829,12 +8836,8 @@ MonoBehaviour:
   acceleration: 100
   rotSpeed: 3
   rotationSpeed: 1000
-  bulletSpeed: 15
-  bulletPrefab: {fileID: 0}
-  GetObjectPositionRoot: {fileID: 0}
-  GetObjectPosition: {fileID: 0}
+  interact_block_root: {fileID: 0}
   pickedObject: {fileID: 0}
-  yVelocity: 0
   topSpeed: 10
   floormap: {fileID: 0}
   boxmap: {fileID: 448525435}
@@ -9762,6 +9765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de52fff96ccb264389df50adb8ee240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amplitude: 0.05
+  frequency: 0.1
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &6254079251108982897
 PrefabInstance:
   m_ObjectHideFlags: 0

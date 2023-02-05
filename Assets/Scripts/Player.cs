@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("pick");
         if (current_face_object == null) return;
-        // if (GetObjectPositionRoot)
+        if (current_face_object.layer != 6) return; // Object layer
         pickedObject = current_face_object;
         current_face_object.GetComponent<BoxCollider2D>().enabled = false;
         pickedObject.transform.SetParent(interact_block.transform);
