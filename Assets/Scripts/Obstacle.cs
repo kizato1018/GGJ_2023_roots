@@ -11,7 +11,7 @@ public class Obstacle : MonoBehaviour, BattleAction
         if (indestructible) AudioManager.instance.PlaySound("339360__newagesoup__drop02");
         else AudioManager.instance.PlaySound("96634__cgeffex__ricochet-wood");
 
-        if (indestructible) yield return null;
+        if (indestructible) yield break;
         hp -= damage;
         if (hp <= 0)
         {
