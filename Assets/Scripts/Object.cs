@@ -24,6 +24,8 @@ public class Object : MonoBehaviour, ObjectSkill
     private Vector3 originPosition; //记录物体的原始坐标
     private float tick;      // 用于计算当前时间量（可以理解成函数坐标轴x轴）
 
+    public GameObject vfx_obj;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +76,7 @@ public class Object : MonoBehaviour, ObjectSkill
     public void SetOwner(GameObject owner, Vector3 ownerLastMoveVector)
     {
         _owner = owner;
+        if (vfx_obj) vfx_obj.SetActive(_owner == null);
         if (sprite_renderer == null) return;
         if (owner == null)
         {
