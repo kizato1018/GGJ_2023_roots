@@ -33,8 +33,14 @@ public class AudioManager : MonoBehaviour
         bgmAudioSource.Play();
     }
 
+    public void StopBgm()
+    {
+        bgmAudioSource.Stop();
+    }
+
     public void PlaySound(string name)
     {
+        soundAudioSource.Stop();
         soundAudioSource.clip = clipList.Find((x) => x.name == name);
         soundAudioSource.Play();
     }
