@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: pool2
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 1c083822d584ef54299a19a438c24528, type: 3}
-  m_Color: {r: 0.8679245, g: 0.32260588, b: 0.32260588, a: 0}
+  m_Color: {r: 0.8679245, g: 0.32260588, b: 0.32260588, a: 1}
   m_Transform:
     e00: 1
     e01: 0

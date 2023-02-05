@@ -23,7 +23,7 @@ public class PoolController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (waterValue > (waterValueMax * percentage / 100))
+        if (waterValue > 0)
         {
             poolSprite.sprite = poolSprites[0];
         }
