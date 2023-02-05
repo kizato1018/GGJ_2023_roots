@@ -48,7 +48,7 @@ public class Weapon : Object
             {
                 Debug.Log("Enemy found inside fan");
                 BattleAction ba = hit.gameObject.GetComponent<BattleAction>();
-                if (ba!=null) ba.UnderAttack(attackValue);
+                if (ba != null) StartCoroutine(ba.UnderAttack(attackValue));
             }
         }
         Debug.Log("No enemy found inside fan");
