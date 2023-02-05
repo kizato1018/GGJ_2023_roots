@@ -21,7 +21,7 @@ public class Weapon : Object
         AudioManager.instance.PlaySound("51755__erkanozan__whip-01");
         Debug.Log("attack!");
         // 取得扇形的中心点
-        Vector2 origin = owner.transform.position;
+        Vector2 origin = owner.transform.parent.parent.position;
 
         // 构造扇形的方向
         Vector2 direction = owner.transform.up;
@@ -57,7 +57,7 @@ public class Weapon : Object
     private void OnDrawGizmos()
     {
         if(_owner ==null) return;
-        Vector2 origin = _owner.transform.position;
+        Vector2 origin = _owner.transform.parent.parent.position;
         Vector2 direction = _owner.transform.up;
 
         // 画出扇形

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 0}
-  root: {fileID: 0}
+  root: {fileID: 11400000, guid: 5f596df8acfd65c468922e05ce70f80e, type: 2}
   Start_RootDatas:
   - {fileID: 0}
   - {fileID: 0}

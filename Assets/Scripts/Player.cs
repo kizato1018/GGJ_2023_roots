@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
         GetInput();
         handleInteraction();
         ProcessInput();
+        IteractBlockMove();
 
 
     }
@@ -81,6 +82,18 @@ public class Player : MonoBehaviour
         use = player.GetButtonDown("Use");
     }
 
+    private void IteractBlockMove()
+    {
+        if(rb.velocity.magnitude > 0.1f)
+        {
+            moveVector = rb.velocity;
+            moveVector.Normalize();
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, moveVector);
+            interact_block.transform.parent.rotation = Quaternion.RotateTowards(interact_block.transform.parent.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            interact_block.transform.localPosition = new Vector3(0, 0.8f, 0);
+
+        }
+    }
     private void ProcessInput()
     {
         // Process movement
@@ -95,12 +108,6 @@ public class Player : MonoBehaviour
                 rb.velocity = rb.velocity.normalized * topSpeed;
             //cc.Move(moveVector * moveSpeed * Time.deltaTime);
 
-            if (moveVector != Vector3.zero)
-            {
-                Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, moveVector);
-                interact_block.transform.parent.rotation = Quaternion.RotateTowards(interact_block.transform.parent.rotation, toRotation, rotationSpeed * Time.deltaTime);
-                interact_block.transform.localPosition = new Vector3(0, 0.8f, 0);
-            }
 
         }
 
