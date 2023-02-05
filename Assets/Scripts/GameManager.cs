@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     // 遊戲進行時長
     [HideInInspector] public int m_seconds;
 
-    public TMP_Text m_timer;           //設定畫面倒數計時的文字
+    public Text m_timer;           //設定畫面倒數計時的文字
 
     private void Awake() {
         
