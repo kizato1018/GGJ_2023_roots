@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     
     public int total_seconds;                 //遊戲總時長
     // 遊戲進行時長
-    [HideInInspector] public int m_seconds;
 
     public Text m_timer;           //設定畫面倒數計時的文字
 
@@ -45,25 +44,22 @@ public class GameManager : MonoBehaviour
     void Start() {
         game_over_obj.SetActive(false);
         game_win_obj.SetActive(false);
-        m_seconds = 0;
         StartCoroutine(Countdown());
         AudioManager.instance.PlayBgm("Happy Alley");
     }
     IEnumerator Countdown()
     {
-        int m_min = 0;
-        int m_sec = 0;
+        int m_min = total_seconds / 60;
+        int m_sec = total_seconds % 60;
 
-        while (m_seconds < total_seconds)                   //如果時間尚未結束
+        while (total_seconds >= 0)                   //如果時間尚未結束
         {
-            m_seconds += 1;
-            m_min = m_seconds / 60;
-            m_sec = m_seconds % 60;
             m_timer.text = string.Format("{0}:{1}", m_min.ToString("00"), m_sec.ToString("00"));
+            total_seconds -= 1;
+            m_min = total_seconds / 60;
+            m_sec = total_seconds % 60;
             // print(m_seconds);
-
-            yield return new WaitForSeconds(1); //等候一秒再次執行
-                       
+            yield return new WaitForSeconds(1); //等候一秒再次執行  
         }
         Finish();                   //時間結束時，控制遊戲暫停無法操作
     }
