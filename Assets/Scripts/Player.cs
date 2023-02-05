@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     // The movement speed of this character
     public float moveSpeed = 3.0f;
+    public float acceleration  = 1000.0f;
     public float rotSpeed = 3.0f;
 
     // The rotation speed of this character
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
     private Vector3 moveVector;
     private Vector3 lastMoveVector;
     public GameObject pickedObject;
+    [SerializeField] private float topSpeed = 10.0f;
+
 
     public Tilemap floormap;
     public Tilemap boxmap;
@@ -30,13 +33,16 @@ public class Player : MonoBehaviour
     public TileBase current_face_tile;
     public GameObject current_face_object;
     public GameObject hold_block;
+    private Rigidbody2D rb;
     private PlayerInteract interact_block;
+    private Vector3 last_position;
     private bool _catch;
     private bool is_hold;
     private bool use;
     private SpriteRenderer sprite_renderer;
     private Animator animator;
 
+    private bool is_collision;
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -50,6 +56,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         boxmap = RootsManager.instance.map;
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -81,14 +88,18 @@ public class Player : MonoBehaviour
         {
             float inputMagnitude = Mathf.Clamp01(moveVector.magnitude);
             moveVector.Normalize();
-
-            this.transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
+            // rb.MovePosition(transform.position + moveVector * moveSpeed * Time.deltaTime);
+            // this.transform.Translate(moveVector * moveSpeed * Time.deltaTime, Space.World);
+            rb.AddForce(moveVector * acceleration * Time.deltaTime);
+            if (rb.velocity.magnitude > topSpeed)
+                rb.velocity = rb.velocity.normalized * topSpeed;
             //cc.Move(moveVector * moveSpeed * Time.deltaTime);
 
             if (moveVector != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, moveVector);
                 interact_block.transform.parent.rotation = Quaternion.RotateTowards(interact_block.transform.parent.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                interact_block.transform.localPosition = new Vector3(0, 0.8f, 0);
             }
 
         }
@@ -161,7 +172,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("pick");
         if (current_face_object == null) return;
-        // if (GetObjectPositionRoot)
+        if (current_face_object.layer != 6) return; // Object layer
         pickedObject = current_face_object;
         current_face_object.GetComponent<BoxCollider2D>().enabled = false;
         pickedObject.transform.SetParent(interact_block.transform);
@@ -189,5 +200,16 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(1, 0, 0);
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawLine(Vector3.zero, moveVector);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "Obstacle")
+            is_collision = true;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "Obstacle")
+            is_collision = false;
     }
 }
