@@ -6,12 +6,12 @@ public class Obstacle : MonoBehaviour, BattleAction
 {
     public int hp = 3;
     public bool indestructible = false;
-    public void UnderAttack(int damage)
+    public IEnumerator UnderAttack(int damage)
     {
         if (indestructible) AudioManager.instance.PlaySound("339360__newagesoup__drop02");
         else AudioManager.instance.PlaySound("96634__cgeffex__ricochet-wood");
 
-        if (indestructible) return;
+        if (indestructible) yield return null;
         hp -= damage;
         if (hp <= 0)
         {

@@ -7,9 +7,9 @@ public class Rabbit : MonoBehaviour, BattleAction
     public int hp = 5;
     public float Speed=1;
     public float sleep_time = 1.0f;
-    private float sleep_timer=0.0f;
+    public float sleep_timer=0.0f;
     public float check_time = 3.0f;
-    private float check_timer=0.0f;
+    public float check_timer=0.0f;
     public RootData current_goal = null; 
     private Animator animator;
     // Start is called before the first frame update
@@ -49,14 +49,23 @@ public class Rabbit : MonoBehaviour, BattleAction
         // print(current_goal);
     }
 
-    public void UnderAttack(int damage)
+    public IEnumerator UnderAttack(int damage)
     {
         AudioManager.instance.PlaySound("89769__cgeffex__fist-punch-3");
         hp -= damage;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
         if (hp <= 0)
         {
+            animator.SetTrigger("die");
+            yield return new WaitForSeconds(1f);
             Died();
         }
+        else
+        {
+            animator.SetTrigger("hurt");
+            yield return new WaitForSeconds(0.2f);
+        }
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void Died()
