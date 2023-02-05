@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
-
-
+using UnityEngine.UI;
 
 public class TreeManager : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public class TreeManager : MonoBehaviour
 
     public SpriteRenderer treeSprite;
     public List<Sprite> treeSprites = new List<Sprite>();
+    public Text waterValueText;
 
     void Awake()
     {
@@ -45,6 +45,7 @@ public class TreeManager : MonoBehaviour
         {
             treeSprite.sprite = treeSprites[0];
         }
+        waterValueText.text = waterValue.ToString();
     }
 
     public void StartAddWater(PoolController poolController)
