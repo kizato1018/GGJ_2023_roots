@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 448525435}
     - target: {fileID: 5611648156388946681, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: m_Name
-      value: Player (1)
+      value: Player 1p
       objectReference: {fileID: 0}
     - target: {fileID: 5611648156388946684, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: m_RootOrder
@@ -1496,6 +1496,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 91177059, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0a4b7fbca826fd1499389e541b208a43, type: 3}
+    - target: {fileID: 1957233994, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ca3ffdfa0ab97394ba7864f287d0cd8c, type: 3}
     - target: {fileID: 5611648156388946680, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: boxmap
       value: 
@@ -1510,7 +1518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5611648156388946681, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: m_Name
-      value: Player (3)
+      value: Player 2p
       objectReference: {fileID: 0}
     - target: {fileID: 5611648156388946681, guid: 333d8b73ab11a174eb4eaced1b9d6639, type: 3}
       propertyPath: m_Layer

@@ -9,7 +9,7 @@ public interface ObjectSkill
 
 public interface BattleAction
 {
-    public void UnderAttack(int damage);
+    public IEnumerator UnderAttack(int damage);
 }
 
 public class Object : MonoBehaviour, ObjectSkill
