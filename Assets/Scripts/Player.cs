@@ -123,14 +123,6 @@ public class Player : MonoBehaviour
                 {
                     // print("Can create root");
                     RootsManager.instance.CreateRoot(interact_block.transform.position);
-                    interact_block.SetTile(box);
-                    //print(RootsManager.instance.CheckToPool(RootsManager.instance.RootDatas[0].v3IntPosition));
-                    if (RootsManager.instance.CheckToPool(RootsManager.instance.RootDatas[0].v3IntPosition))
-                    {
-                        // Debug.Log("連上水池");
-                        //TODO 判斷是連上哪個水池
-                        //TreeManager.instance.StartAddWater();
-                    }
                 }
             }
             else if (pickedObject.tag == "Weapon")

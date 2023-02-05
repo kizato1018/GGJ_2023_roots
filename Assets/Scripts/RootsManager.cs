@@ -18,9 +18,10 @@ public class RootsManager : MonoBehaviour
 {
     static public RootsManager instance;
     public Tilemap map;
+    public TileBase root;
     public List<Transform> Start_RootDatas = new List<Transform>();
     public List<RootData> RootDatas = new List<RootData>();
-    private List<Vector3Int> _visited = new List<Vector3Int>();
+    
     // Start is called before the first frame update
     private bool is_connected = false;
     void Awake()
@@ -31,7 +32,8 @@ public class RootsManager : MonoBehaviour
     {
         foreach (Transform start in Start_RootDatas)
         {
-            CreateRoot(start.position);
+            RootData rootData = new RootData(start.position, map);
+            RootDatas.Add(rootData);
         }
     }
 
@@ -63,7 +65,9 @@ public class RootsManager : MonoBehaviour
         bool current_connect = is_connected;
         RootData rootData = new RootData(pos, map);
         RootDatas.Add(rootData);
-        is_connected = CheckToPool(rootData.v3IntPosition);
+        map.SetTile(rootData.v3IntPosition, root);
+        CheckToPool();
+        is_connected = TreeManager.instance.AllPoolControllerList[0].isConnect;
         if(current_connect != is_connected)
         {
             Debug.Log("連上水池");
@@ -82,8 +86,9 @@ public class RootsManager : MonoBehaviour
                 break;
             }
         }
-        is_connected = CheckToPool(rootData.v3IntPosition);
-         if(current_connect != is_connected)
+        CheckToPool();
+        is_connected = TreeManager.instance.AllPoolControllerList[0].isConnect;
+        if(current_connect != is_connected)
         {
             Debug.Log("斷開水池");
         }
@@ -124,69 +129,53 @@ public class RootsManager : MonoBehaviour
         return new RootData(pos, map);
     }
 
-    public PoolController CheckToPool(Vector3Int location)
+    public void CheckToPool()
     {
 
-        Vector3Int up = location+Vector3Int.up;
-        Vector3Int right = location+Vector3Int.right;
-        Vector3Int down = location+Vector3Int.down;
-        Vector3Int left = location+Vector3Int.left;
-
-        if ((map.GetTile(up) && map.GetTile(up).name == "pool") || 
-            (map.GetTile(right) && map.GetTile(right).name == "pool") || 
-            (map.GetTile(down) && map.GetTile(down).name == "pool") || 
-            (map.GetTile(left) && map.GetTile(left).name == "pool"))
-        {
-            
-            print("is POOL 1!");
-            return TreeManager.instance.AllPoolControllerList[0];
+        List<Vector3Int> _visited = new List<Vector3Int>();
+        Queue<Vector3Int> q = new Queue<Vector3Int>();
+        for(int i = 0; i < Start_RootDatas.Count; i++){
+            q.Enqueue(RootDatas[i].v3IntPosition);
         }
 
-        if ((map.GetTile(up) && map.GetTile(up).name == "pool1") || 
-            (map.GetTile(right) && map.GetTile(right).name == "pool1") || 
-            (map.GetTile(down) && map.GetTile(down).name == "pool1") || 
-            (map.GetTile(left) && map.GetTile(left).name == "pool1"))
-        {
-            print("is POOL 2!");
-            return TreeManager.instance.AllPoolControllerList[1];
-        }
 
-        if ((map.GetTile(up) && map.GetTile(up).name == "pool2") || 
-            (map.GetTile(right) && map.GetTile(right).name == "pool2") || 
-            (map.GetTile(down) && map.GetTile(down).name == "pool2") || 
-            (map.GetTile(left) && map.GetTile(left).name == "pool2"))
+        foreach(PoolController pc in TreeManager.instance.AllPoolControllerList)
         {
-
-            print("is POOL 2!");
-            return TreeManager.instance.AllPoolControllerList[2];
+            pc.isConnect = false;
         }
-
-        _visited.Add(location);
-        if (map.GetTile(up) && map.GetTile(up).name == "root" && !_visited.Contains(up))
-        {
-            PoolController pc = CheckToPool(up);
-            if(pc)
-                return pc;
+        while(q.Count > 0) {
+            Vector3Int location = q.Dequeue();
+            print(location);
+            if (_visited.Contains(location)) continue;
+            _visited.Add(location);
+            if (map.GetTile(location) && map.GetTile(location).name == "pool")
+            {
+                print("is POOL 1!");
+                TreeManager.instance.AllPoolControllerList[0].isConnect = true;
+                continue;
+            }
+            if (map.GetTile(location) && map.GetTile(location).name == "pool1")
+            {
+                print("is POOL 2!");
+                TreeManager.instance.AllPoolControllerList[1].isConnect = true;
+                continue;
+                // return TreeManager.instance.AllPoolControllerList[1];
+            }
+            if (map.GetTile(location) && map.GetTile(location).name == "pool2")
+            {
+                print("is POOL 3!");
+                TreeManager.instance.AllPoolControllerList[2].isConnect = true;
+                continue;
+                // return TreeManager.instance.AllPoolControllerList[2];
+            }
+            if(map.GetTile(location) && map.GetTile(location).name == "root")
+            {
+                q.Enqueue(location+Vector3Int.up);
+                q.Enqueue(location+Vector3Int.right);
+                q.Enqueue(location+Vector3Int.down);
+                q.Enqueue(location+Vector3Int.left);
+            }
         }
-        if (map.GetTile(right) && map.GetTile(right).name == "root" && !_visited.Contains(right))
-        {
-            PoolController pc = CheckToPool(right);
-            if(pc)
-                return pc;
-        }
-        if (map.GetTile(down) && map.GetTile(down).name == "root" && !_visited.Contains(down))
-        {
-            PoolController pc = CheckToPool(down);
-            if(pc)
-                return pc;
-        }
-        if (map.GetTile(left) && map.GetTile(left).name == "root" && !_visited.Contains(left))
-        {
-            PoolController pc = CheckToPool(left);
-            if(pc)
-                return pc;
-        }
-        _visited.Remove(location);
-        return null;
+        return;
     }
 }

@@ -10,7 +10,7 @@ public class Rabbit : MonoBehaviour, BattleAction
     private float sleep_timer=0.0f;
     public float check_time = 3.0f;
     private float check_timer=0.0f;
-    private RootData current_goal = null; 
+    public RootData current_goal = null; 
     private Animator animator;
     // Start is called before the first frame update
     void Start()
