@@ -8,6 +8,9 @@ public class Obstacle : MonoBehaviour, BattleAction
     public bool indestructible = false;
     public void UnderAttack(int damage)
     {
+        if (indestructible) AudioManager.instance.PlaySound("339360__newagesoup__drop02");
+        else AudioManager.instance.PlaySound("96634__cgeffex__ricochet-wood");
+
         if (indestructible) return;
         hp -= damage;
         if (hp <= 0)

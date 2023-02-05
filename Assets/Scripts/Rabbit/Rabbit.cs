@@ -35,6 +35,7 @@ public class Rabbit : MonoBehaviour, BattleAction
             if (Vector3.Distance(transform.position,current_goal.worldPosition) < 0.01f)
             {
                 animator.SetTrigger("attack");
+                AudioManager.instance.PlaySound("412068__inspectorj__chewing-carrot-a");
                 sleep_timer += Time.deltaTime;
                 if(sleep_timer > sleep_time)
                 {
@@ -50,6 +51,7 @@ public class Rabbit : MonoBehaviour, BattleAction
 
     public void UnderAttack(int damage)
     {
+        AudioManager.instance.PlaySound("89769__cgeffex__fist-punch-3");
         hp -= damage;
         if (hp <= 0)
         {

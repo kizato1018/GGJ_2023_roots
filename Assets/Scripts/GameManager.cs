@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         game_win_obj.SetActive(false);
         m_seconds = 0;
         StartCoroutine(Countdown());
+        AudioManager.instance.PlayBgm("Happy Alley");
     }
     IEnumerator Countdown()
     {
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
         game_over_obj.SetActive(true);
         game_win_obj.SetActive(false);
         Time.timeScale = 0;
+        AudioManager.instance.PlayBgm("Happy Alley");
     }
 
     /// <summary>
@@ -83,6 +85,7 @@ public class GameManager : MonoBehaviour
         game_over_obj.SetActive(false);
         game_win_obj.SetActive(true);
         Time.timeScale = 0;
+        AudioManager.instance.PlayBgm("The Forest and the Trees");
     }
 
     public void Pause() {

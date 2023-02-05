@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
             if (pickedObject.tag == "Kettle")
             {
                 // print("use Kettle");
+                AudioManager.instance.PlaySound("371274__mafon2__water-click");
                 if (RootsManager.instance.CanCreateRoot(interact_block.transform.position))
                 {
                     // print("Can create root");
@@ -176,6 +177,7 @@ public class Player : MonoBehaviour
 
     private void putDown()
     {
+        AudioManager.instance.PlaySound("126489__ayavaron__key_drop-01");
         // Debug.Log("putDown");
         pickedObject.transform.parent = null;
         pickedObject.transform.rotation = Quaternion.identity;

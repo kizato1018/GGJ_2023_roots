@@ -18,6 +18,7 @@ public class Weapon : Object
 
     public override void UseSkill(GameObject owner)
     {
+        AudioManager.instance.PlaySound("51755__erkanozan__whip-01");
         Debug.Log("attack!");
         // 取得扇形的中心点
         Vector2 origin = owner.transform.position;
