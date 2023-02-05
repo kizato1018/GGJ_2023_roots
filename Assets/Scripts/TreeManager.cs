@@ -22,6 +22,7 @@ public class TreeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(AddWater());
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class TreeManager : MonoBehaviour
     public void StartAddWater(PoolController poolController)
     {
         if (!PoolControllerList.Contains(poolController)) PoolControllerList.Add(poolController);
-        StartCoroutine(AddWater());
+        
     }
 
     public void RemovePoolController(PoolController poolController)
@@ -45,24 +46,18 @@ public class TreeManager : MonoBehaviour
 
     IEnumerator AddWater()
     {
-        yield return new WaitForSeconds(1);
-        if (PoolControllerList.Count == 0) yield break;
-        foreach (PoolController data in PoolControllerList)
+        while(waterValue < maxWaterValue)
         {
-            if (data.waterValue > 0)
+            foreach (PoolController pc in PoolControllerList)
             {
-                data.waterValue--;
-                waterValue++;
+                if (pc.waterValue > 0)
+                {
+                    pc.waterValue--;
+                    waterValue++;
+                }
+                print(pc.waterValue);
             }
-            print(data.waterValue);
-        }
-        if (waterValue >= maxWaterValue)
-        {
-            Debug.Log("���F");
-        }
-        else
-        {
-            StartCoroutine(AddWater());
+            yield return new WaitForSeconds(1);
         }
     }
 }
