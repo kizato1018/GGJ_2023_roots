@@ -22,7 +22,7 @@ public class TreeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(AddWater());
+        
     }
 
     // Update is called once per frame
@@ -44,13 +44,13 @@ public class TreeManager : MonoBehaviour
 
     //public void Stop
 
-    IEnumerator AddWater()
+    public IEnumerator AddWater()
     {
         while(waterValue < maxWaterValue)
         {
-            foreach (PoolController pc in PoolControllerList)
+            foreach (PoolController pc in AllPoolControllerList)
             {
-                if (pc.waterValue > 0)
+                if (pc.isConnect && pc.waterValue > 0)
                 {
                     pc.waterValue--;
                     waterValue++;

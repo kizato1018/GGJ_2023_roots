@@ -35,6 +35,7 @@ public class RootsManager : MonoBehaviour
             RootData rootData = new RootData(start.position, map);
             RootDatas.Add(rootData);
         }
+        StartCoroutine(TreeManager.instance.AddWater());
     }
 
     // Update is called once per frame
