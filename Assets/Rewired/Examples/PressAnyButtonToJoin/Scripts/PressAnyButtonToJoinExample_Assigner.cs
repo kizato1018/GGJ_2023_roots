@@ -33,7 +33,7 @@ namespace Rewired.Demos {
                 if(joystick.GetAnyButtonDown()) {
 
                     // Find the next Player without a Joystick
-                    Player player = FindPlayerWithoutJoystick();
+                    Player player = FindPlayerWithoutJoystickAndKeyBoard();
                     if(player == null) return; // no free joysticks
 
                     // Assign the joystick to this Player
@@ -51,9 +51,10 @@ namespace Rewired.Demos {
         }
 
         // Searches all Players to find the next Player without a Joystick assigned
-        private Player FindPlayerWithoutJoystick() {
+        private Player FindPlayerWithoutJoystickAndKeyBoard() {
             IList<Player> players = ReInput.players.Players;
             for(int i = 0; i < players.Count; i++) {
+                if (players[i].controllers.hasKeyboard) continue;
                 if(players[i].controllers.joystickCount > 0) continue;
                 return players[i];
             }
@@ -61,7 +62,7 @@ namespace Rewired.Demos {
         }
 
         private bool DoAllPlayersHaveJoysticks() {
-            return FindPlayerWithoutJoystick() == null;
+            return FindPlayerWithoutJoystickAndKeyBoard() == null;
         }
     }
 }

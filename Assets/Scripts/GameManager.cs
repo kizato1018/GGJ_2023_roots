@@ -26,22 +26,28 @@ public class GameManager : MonoBehaviour
 
     private bool gameover_flag_;
 
-    public List<Character> players{
+    public int scene_number = 0;
+
+    public List<Character> players
+    {
         get { return players_; }
     }
-    public List<Rabbit> rabbits{
-        get { return rabbits_;}
+    public List<Rabbit> rabbits
+    {
+        get { return rabbits_; }
     }
-    
+
     public int total_seconds;                 //遊戲總時長
     // 遊戲進行時長
 
     public Text m_timer;           //設定畫面倒數計時的文字
 
-    private void Awake() {
+    private void Awake()
+    {
         instance = this;
     }
-    void Start() {
+    void Start()
+    {
         game_over_obj.SetActive(false);
         game_win_obj.SetActive(false);
         StartCoroutine(Countdown());
@@ -63,7 +69,8 @@ public class GameManager : MonoBehaviour
         }
         Finish();                   //時間結束時，控制遊戲暫停無法操作
     }
-    public void Finish() {
+    public void Finish()
+    {
         print("Game End");
         game_over_obj.SetActive(true);
         game_win_obj.SetActive(false);
@@ -84,10 +91,12 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayBgm("The Forest and the Trees");
     }
 
-    public void Pause() {
+    public void Pause()
+    {
         Time.timeScale = 0;
     }
-    public void Resume() {
+    public void Resume()
+    {
         Time.timeScale = 1;
     }
 
@@ -98,6 +107,6 @@ public class GameManager : MonoBehaviour
         TreeManager.instance = null;
         AudioManager.instance = null;
         GameManager.instance = null;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(scene_number);
     }
 }
