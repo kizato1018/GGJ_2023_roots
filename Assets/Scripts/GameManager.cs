@@ -19,14 +19,13 @@ public class GameManager : MonoBehaviour
     public List<GameObject> players_gameobject_;
     public GameObject game_over_obj;
     public GameObject game_win_obj;
+    public Slider _progress;
 
     static public GameManager instance;
     private List<Character> players_;
     private List<Rabbit> rabbits_;
 
     private bool gameover_flag_;
-
-    public int scene_number = 0;
 
     public List<Character> players
     {
@@ -102,11 +101,47 @@ public class GameManager : MonoBehaviour
 
     public void ReStart()
     {
+        Pause();
+        StartCoroutine(LoadScene());
+    }
+
+    IEnumerator LoadScene()
+    {
+        _progress.gameObject.SetActive(true);
+        //用Slider 展示的数值
+        int disableProgress = 0;
+        int toProgress = 0;
+
+        //异步场景切换
+        AsyncOperation op = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        //不允许有场景切换功能
+        op.allowSceneActivation = false;
+        //op.progress 只能获取到90%，最后10%获取不到，需要自己处理
+        while (op.progress < 0.9f)
+        {
+            //获取真实的加载进度
+            toProgress = (int)(op.progress * 100);
+            while (disableProgress < toProgress)
+            {
+                ++disableProgress;
+                _progress.value = disableProgress / 100.0f;//0.01开始
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        //因为op.progress 只能获取到90%，所以后面的值不是实际的场景加载值了
+        toProgress = 100;
+        while (disableProgress < toProgress)
+        {
+            ++disableProgress;
+            _progress.value = disableProgress / 100.0f;
+            yield return new WaitForEndOfFrame();
+        }
         Resume();
         RootsManager.instance = null;
         TreeManager.instance = null;
         AudioManager.instance = null;
         GameManager.instance = null;
-        SceneManager.LoadScene(scene_number);
+        op.allowSceneActivation = true;
+        _progress.gameObject.SetActive(false);
     }
 }
