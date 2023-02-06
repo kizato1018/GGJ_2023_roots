@@ -77,7 +77,7 @@ public class TreeManager : MonoBehaviour
                         yield break;
                     }
                 }
-                print(pc.waterValue);
+                //print(pc.waterValue);
             }
             yield return new WaitForSeconds(1);
         }
