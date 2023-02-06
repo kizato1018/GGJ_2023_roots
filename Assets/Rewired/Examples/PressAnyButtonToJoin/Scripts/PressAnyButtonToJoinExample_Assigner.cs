@@ -10,9 +10,18 @@ namespace Rewired.Demos {
     using UnityEngine;
     using System.Collections.Generic;
     using Rewired;
+    using UnityEngine.UI;
 
     [AddComponentMenu("")]
     public class PressAnyButtonToJoinExample_Assigner : MonoBehaviour {
+        public GameObject CheckInputPage;
+        public Toggle p1InputState;
+
+
+        void Start()
+        {
+
+        }
 
         private void Update() {
             if(!ReInput.isReady) return;
@@ -54,6 +63,10 @@ namespace Rewired.Demos {
         private Player FindPlayerWithoutJoystickAndKeyBoard() {
             IList<Player> players = ReInput.players.Players;
             for(int i = 0; i < players.Count; i++) {
+                if (i == 0)
+                {
+                    p1InputState.isOn = players[i].controllers.hasKeyboard;
+                }
                 if (players[i].controllers.joystickCount > 0) continue;
                 //if (players[i].controllers.hasKeyboard) players[i].controllers.hasKeyboard = false;
                 return players[i];
