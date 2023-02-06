@@ -54,8 +54,8 @@ namespace Rewired.Demos {
         private Player FindPlayerWithoutJoystickAndKeyBoard() {
             IList<Player> players = ReInput.players.Players;
             for(int i = 0; i < players.Count; i++) {
-                if (players[i].controllers.hasKeyboard) continue;
-                if(players[i].controllers.joystickCount > 0) continue;
+                if (players[i].controllers.joystickCount > 0) continue;
+                //if (players[i].controllers.hasKeyboard) players[i].controllers.hasKeyboard = false;
                 return players[i];
             }
             return null;
