@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3489142410285954512}
   - component: {fileID: 907414241826257931}
   - component: {fileID: 1391481045653084591}
-  - component: {fileID: 5742584461006696637}
+  - component: {fileID: 173168362769007213}
   m_Layer: 0
   m_Name: InputSettingCanvas
   m_TagString: Untagged
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5742584461006696637
+--- !u!114 &173168362769007213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 196571224442489639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 691f9cbd502777d4f81ac829f1a5a367, type: 3}
+  m_Script: {fileID: 11500000, guid: 99eb247fab51a9744a9cd53e699e1a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CheckInputPage: {fileID: 8303718797076447420}
@@ -943,10 +943,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8303718797076447420}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 173168362769007213}
+        m_TargetAssemblyTypeName: InputSetting, Assembly-CSharp
+        m_MethodName: OpenSettingPage
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2303,10 +2303,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8303718797076447420}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 173168362769007213}
+        m_TargetAssemblyTypeName: InputSetting, Assembly-CSharp
+        m_MethodName: CloseSettingPage
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
